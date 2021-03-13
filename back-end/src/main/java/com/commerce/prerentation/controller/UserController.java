@@ -1,4 +1,4 @@
-package com.commerce.prerentation.controller.web;
+package com.commerce.prerentation.controller;
 
 import com.commerce.common.utils.JwtUtils;
 import com.commerce.data.dto.MyUserDetails;
@@ -41,7 +41,7 @@ public class UserController {
         return ResponseEntity.created(new URI("/api/user?id="+res.getId())).body(res);
     }
 
-    @PostMapping("/authenticate")
+    @PostMapping("/user/authenticate")
     public ResponseEntity<String> authentication(@RequestBody AuthenticationRequest authenticationRequest){
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
                 authenticationRequest.getPassword()));
@@ -50,4 +50,23 @@ public class UserController {
         return ResponseEntity.ok(jwt);
     }
 
+    @PostMapping("/user/otp")
+    public ResponseEntity<String> sendOtp(@RequestParam("email") String email,
+                                          @RequestParam("firstName") String firstName,
+                                          @RequestParam("lastName") String lastName) {
+        String otp = userService.sendOtp(email,firstName,lastName);
+        return ResponseEntity.ok(otp);
+    }
+
+    @PostMapping("/user/check-email")
+    public ResponseEntity<Boolean> checkEmailExisted(@RequestParam("email") String email){
+        Boolean res = userService.isEmailExisted(email);
+        return ResponseEntity.ok(res);
+    }
+
+    @PostMapping("/user/check-username")
+    public ResponseEntity<Boolean> checkUsernameExisted(@RequestParam("username") String username){
+        Boolean res = userService.isUsernameExisted(username);
+        return ResponseEntity.ok(res);
+    }
 }
