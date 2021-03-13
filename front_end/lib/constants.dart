@@ -27,3 +27,5 @@ final otpDecoration = InputDecoration(
         borderSide: BorderSide(color: kPrimaryColor)
     )
 );
+
+const String baseUrl = "http://localhost:8080/api";
