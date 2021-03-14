@@ -74,6 +74,8 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
+        if (user == null)
+            throw new UsernameNotFoundException("Invalid user");
         List<GrantedAuthority> authorities = new ArrayList<>();
         if (user.getRoles() != null){
             user.getRoles().forEach(role -> {

@@ -43,8 +43,14 @@ public class UserController {
 
     @PostMapping("/user/authenticate")
     public ResponseEntity<String> authentication(@RequestBody AuthenticationRequest authenticationRequest){
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
-                authenticationRequest.getPassword()));
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
+                    authenticationRequest.getPassword()));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
         UserDetails userDetails = userService.loadUserByUsername(authenticationRequest.getUsername());
         String jwt = JwtUtils.generateToken(userDetails);
         return ResponseEntity.ok(jwt);
