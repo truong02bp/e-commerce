@@ -26,5 +26,9 @@ class SignUpSateUserNameExited extends SignUpState {
 
 }
 
+class SignUpStepOneStateSuccess extends SignUpState {
+
+}
+
 
 

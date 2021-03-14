@@ -22,7 +22,7 @@ class _SignUpFormState extends State<SignUpForm> {
     return Form(
       key: _formKey,
         child: Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(25),
       child: Column(
         children: [
           SizedBox(

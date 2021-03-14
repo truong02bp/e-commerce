@@ -15,6 +15,5 @@ class CheckUsernameExistedEvent extends SignUpEvent {
 
 class CheckEmailExistedEvent extends SignUpEvent {
   final String email;
-
   CheckEmailExistedEvent({this.email});
 }

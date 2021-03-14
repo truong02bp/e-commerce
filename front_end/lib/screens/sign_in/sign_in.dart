@@ -1,6 +1,7 @@
+import 'package:ecommerce/blocs/authentication_bloc.dart';
 import 'package:ecommerce/screens/sign_in/components/body.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 class SignIn extends StatelessWidget {
   static final String routeName = "/sign-in";
 
@@ -10,7 +11,9 @@ class SignIn extends StatelessWidget {
       appBar: AppBar(
         title: Text('Sign in'),
       ),
-      body: SingleChildScrollView(child: SignInBody()),
+      body: BlocProvider(
+          create: (context) => AuthenticationBloc(),
+          child: SingleChildScrollView(child: SignInBody())),
     );
   }
 }

@@ -7,9 +7,6 @@ class LoginSuccess extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login success'),
-      ),
       body: LoginSuccessBody(),
     );
   }
