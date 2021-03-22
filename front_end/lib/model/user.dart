@@ -7,6 +7,7 @@ class User {
   String lastName;
   String phone;
   String email;
+  String address;
 
   User(
       {this.id,
@@ -15,7 +16,7 @@ class User {
       this.firstName,
       this.lastName,
       this.phone,
-      this.email});
+      this.email, this.address});
 
   factory User.formJson(Map<String,dynamic> jsonMap){
     int id = jsonMap['id'] as int;
@@ -26,7 +27,8 @@ class User {
       firstName : jsonMap['firstName'],
       lastName: jsonMap['lastName'],
       phone: jsonMap['phone'],
-      email: jsonMap['email']
+      email: jsonMap['email'],
+      address: jsonMap['address']
     );
   }
 }

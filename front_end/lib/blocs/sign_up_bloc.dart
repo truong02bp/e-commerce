@@ -11,6 +11,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
   User user = User();
 
+  String otp;
+
   @override
   Stream<SignUpState> mapEventToState(SignUpEvent event) async* {
     if (event is CompleteStepOneEvent) {
@@ -35,5 +37,14 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         yield SignUpStepOneStateSuccess();
       }
     }
+    else
+      if (event is CompleteStepSecondEvent){
+        user.lastName = event.lastName;
+        user.firstName = event.firstName;
+        user.phone = event.phoneNumber;
+        user.address = event.address;
+        otp = await userService.sendOtp(email: user.email, firstName: user.firstName, lastName: user.lastName);
+        yield SignUpStepSecondStateSuccess();
+      }
   }
 }

@@ -28,4 +28,17 @@ final otpDecoration = InputDecoration(
     )
 );
 
-const String baseUrl = "http://192.168.25.108:8080/api";
+const String baseUrl = "http://192.168.1.7:8080/api";
+
+Widget buildLoading({bool isLoading}) {
+  if (isLoading)
+    return SizedBox(
+      width: double.infinity,
+      child: Image.asset(
+        "assets/images/loading.gif",
+        height: getProportionateHeight(100),
+        width: getProportionateWidth(100),
+      ),
+    );
+  return Container();
+}

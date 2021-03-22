@@ -10,6 +10,23 @@ import 'package:http/http.dart' as http;
 class UserService {
   ApiService apiService = ApiService();
 
+  Future<String> sendOtp({String email, String firstName, String lastName}) async {
+    try {
+      final res = await http.post(baseUrl + "/user/otp?"
+      + "email=" + email
+      + "&firstName=" + firstName
+      + "&lastName=" + lastName);
+      if (res.statusCode == 200){
+        return res.body;
+      }
+      else
+        throw new Exception(res.statusCode.toString());
+    }
+    catch (exception) {
+      throw new Exception(exception.toString());
+    }
+  }
+  
   Future<bool> isEmailExisted({String email}) async {
     try {
       final res = await http.post(baseUrl + "/user/check-email?email=" + email);

@@ -43,9 +43,14 @@ class _SignUpFormState extends State<SignUpForm> {
           });
         } else {
           if (state is SignUpStepOneStateSuccess) {
-            Navigator.pushNamed(context, CompleteProfile.routeName, arguments: {
-              'bloc' : BlocProvider.of(context)
-            });
+            Navigator.of(context).push(
+              MaterialPageRoute<CompleteProfile>(builder: (context){
+                return BlocProvider.value(
+                    value: _signUpBloc,
+                    child: CompleteProfile(),
+                );
+              })
+            );
           }
           if (state is SignUpLoading) {
             setState(() {
@@ -92,7 +97,7 @@ class _SignUpFormState extends State<SignUpForm> {
                             password: _password));
                       }
                     }),
-                buildLoading()
+                buildLoading(isLoading: isLoading)
               ],
             ),
           )),
@@ -229,16 +234,4 @@ class _SignUpFormState extends State<SignUpForm> {
       });
   }
 
-  Widget buildLoading() {
-    if (isLoading)
-      return SizedBox(
-        width: double.infinity,
-        child: Image.asset(
-          "assets/images/loading.gif",
-          height: getProportionateHeight(100),
-          width: getProportionateWidth(100),
-        ),
-      );
-    return Container();
-  }
 }

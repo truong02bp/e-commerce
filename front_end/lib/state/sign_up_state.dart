@@ -23,6 +23,10 @@ class SignUpStepOneStateSuccess extends SignUpState {
 
 }
 
+class SignUpStepSecondStateSuccess extends SignUpState {
+
+}
+
 class SignUpLoading extends SignUpState {
 
 }
