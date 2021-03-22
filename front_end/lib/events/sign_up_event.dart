@@ -7,13 +7,15 @@ class SignUpEvent extends Equatable {
 
 }
 
-class CheckUsernameExistedEvent extends SignUpEvent {
-    final String username;
-
-    CheckUsernameExistedEvent({this.username});
-}
-
-class CheckEmailExistedEvent extends SignUpEvent {
+class CompleteStepOneEvent extends SignUpEvent {
   final String email;
-  CheckEmailExistedEvent({this.email});
+  final String username;
+  final String password;
+
+  CompleteStepOneEvent({this.email, this.username, this.password});
 }
+
+class CompleteStepSecondEvent extends SignUpEvent {
+
+}
+

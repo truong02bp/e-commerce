@@ -1,15 +1,19 @@
+import 'package:ecommerce/blocs/authentication_bloc.dart';
 import 'package:ecommerce/components/account_question.dart';
 import 'package:ecommerce/components/custom_banner.dart';
 import 'package:ecommerce/components/custom_icon.dart';
-import 'package:ecommerce/components/default_button.dart';
-import 'package:ecommerce/constants.dart';
 import 'package:ecommerce/screens/sign_in/components/sign_in_form.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
-import '../../../components/custom_suffix_icons.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 class SignInBody extends StatelessWidget {
+
+  static Widget create(BuildContext context){
+    return  BlocProvider(
+        create: (context) => AuthenticationBloc(),
+        child: SingleChildScrollView(child: SignInBody()));
+  }
+
   @override
   Widget build(BuildContext context) {
 

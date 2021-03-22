@@ -1,9 +1,19 @@
+import 'package:ecommerce/blocs/sign_up_bloc.dart';
 import 'package:ecommerce/components/custom_banner.dart';
 import 'package:ecommerce/components/custom_icon.dart';
 import 'package:ecommerce/screens/sign_up/components/sign_up_form.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 class SignUpBody extends StatelessWidget {
+
+  static Widget create(BuildContext context){
+    return BlocProvider(
+      create: (context) => SignUpBloc(),
+      child: SignUpBody(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

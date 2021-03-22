@@ -13,10 +13,7 @@ class SignUp extends StatelessWidget {
       appBar: AppBar(
         title: Text('Sign up'),
       ),
-      body: BlocProvider(
-          create: (context) =>SignUpBloc(SignUpInitial()),
-          child: SignUpBody()
-      ),
+      body: SignUpBody.create(context)
     );
   }
 }

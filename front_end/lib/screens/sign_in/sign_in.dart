@@ -11,9 +11,7 @@ class SignIn extends StatelessWidget {
       appBar: AppBar(
         title: Text('Sign in'),
       ),
-      body: BlocProvider(
-          create: (context) => AuthenticationBloc(),
-          child: SingleChildScrollView(child: SignInBody())),
+      body: SignInBody.create(context),
     );
   }
 }

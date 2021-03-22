@@ -1,4 +1,4 @@
-import 'package:ecommerce/events/authenticateion_event.dart';
+import 'package:ecommerce/events/authentication_event.dart';
 import 'package:ecommerce/model/user.dart';
 import 'package:ecommerce/service/user_service.dart';
 import 'package:ecommerce/state/authentication_state.dart';

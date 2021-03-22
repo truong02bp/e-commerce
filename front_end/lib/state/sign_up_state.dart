@@ -4,7 +4,7 @@ class SignUpState extends Equatable {
 
   @override
   // TODO: implement props
-  List<Object> get props => throw UnimplementedError();
+  List<Object> get props => [];
 
 }
 
@@ -12,21 +12,18 @@ class SignUpInitial extends SignUpState {
 
 }
 
-class SignUpStateEmailExisted extends SignUpState {
-  final String message;
-
-  SignUpStateEmailExisted({this.message});
-}
-
-class SignUpSateUserNameExited extends SignUpState {
+class SignUpStateCheckExisted extends SignUpState {
 
   final String message;
 
-  SignUpSateUserNameExited({this.message});
-
+  SignUpStateCheckExisted({this.message});
 }
 
 class SignUpStepOneStateSuccess extends SignUpState {
+
+}
+
+class SignUpLoading extends SignUpState {
 
 }
 
