@@ -60,13 +60,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isEmailExisted(String email) {
         User user = userRepository.findByEmail(email);
-        return user == null;
+        return !(user == null);
     }
 
     @Override
     public boolean isUsernameExisted(String username) {
         User user = userRepository.findByUsername(username);
-        return user == null;
+        return !(user == null);
     }
 
 

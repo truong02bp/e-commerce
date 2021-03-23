@@ -28,7 +28,7 @@ final otpDecoration = InputDecoration(
     )
 );
 
-const String baseUrl = "http://192.168.1.7:8080/api";
+const String baseUrl = "http://192.168.0.12:8080/api";
 
 Widget buildLoading({bool isLoading}) {
   if (isLoading)

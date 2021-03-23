@@ -1,5 +1,6 @@
 import 'package:ecommerce/components/default_button.dart';
 import 'package:ecommerce/constants.dart';
+import 'package:ecommerce/screens/home/home_screen.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,9 @@ class LoginSuccessBody extends StatelessWidget {
         ),
         Container(
           padding: const EdgeInsets.only(left: 50, right: 50),
-          child: DefaultButton(text: 'Back to home', press: () {}),
+          child: DefaultButton(text: 'Back to home', press: () {
+            Navigator.pushNamed(context, HomeScreen.routeName);
+          }),
         )
       ],
     );
