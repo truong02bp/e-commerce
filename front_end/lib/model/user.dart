@@ -31,4 +31,15 @@ class User {
       address: jsonMap['address']
     );
   }
+  Map<String, dynamic> toJson() =>
+      {
+        'id' : id,
+        'username': username,
+        'password': password,
+        'firstName': firstName,
+        'lastName': lastName,
+        'phone': phone,
+        'address': address,
+        'email': email,
+      };
 }

@@ -32,3 +32,4 @@ class SubmitOtpEvent extends SignUpEvent {
 
   SubmitOtpEvent({this.otp});
 }
+

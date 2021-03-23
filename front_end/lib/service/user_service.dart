@@ -78,4 +78,19 @@ class UserService {
         });
     return apiService.load(apiModel);
   }
+  
+  void create(User user) async {
+    try {
+      Map<String, String> headers = Map();
+      headers["Content-Type"] = "application/json";
+      final res = await http.post(baseUrl+"/user", body: jsonEncode(user), headers: headers);
+      print(res.toString());
+      if (res.statusCode != 200)
+        throw new Exception(res.statusCode.toString());
+    }
+    catch (exception){
+      throw Exception(exception.toString());
+    }
+  }
+  
 }

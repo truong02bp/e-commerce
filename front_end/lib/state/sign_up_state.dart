@@ -31,5 +31,15 @@ class SignUpLoading extends SignUpState {
 
 }
 
+class SignUpOtpSuccess extends SignUpState {
+
+}
+
+class SignUpOtpFailure extends SignUpState {
+
+}
+
+
+
 
 

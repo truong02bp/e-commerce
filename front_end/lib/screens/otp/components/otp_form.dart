@@ -2,7 +2,9 @@ import 'package:ecommerce/blocs/sign_up_bloc.dart';
 import 'package:ecommerce/components/default_button.dart';
 import 'package:ecommerce/constants.dart';
 import 'package:ecommerce/events/sign_up_event.dart';
+import 'package:ecommerce/screens/login_success/login_success.dart';
 import 'package:ecommerce/size_config.dart';
+import 'package:ecommerce/state/sign_up_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 class OtpForm extends StatefulWidget {
@@ -28,7 +30,9 @@ class _OtpFormState extends State<OtpForm> {
     return BlocListener(
       cubit: _signUpBloc,
       listener: (context,state){
-
+        if (state is SignUpOtpSuccess){
+          Navigator.pushNamed(context, LoginSuccess.routeName);
+        }
       },
       child: SizedBox(
         width: double.infinity,
