@@ -1,5 +1,6 @@
 import 'package:ecommerce/components/default_button.dart';
 import 'package:ecommerce/constants.dart';
+import 'package:ecommerce/screens/home/home_screen.dart';
 import 'package:ecommerce/screens/sign_in/sign_in.dart';
 import 'package:ecommerce/screens/splash/components/splash_content.dart';
 import 'package:ecommerce/size_config.dart';
@@ -64,7 +65,7 @@ class _BodyState extends State<Body> {
                     DefaultButton(
                       text: 'Continute',
                       press: (){
-                        Navigator.pushNamed(context, SignIn.routeName);
+                        Navigator.pushNamed(context, HomeScreen.routeName);
                       },
                     ),
                     Spacer()
