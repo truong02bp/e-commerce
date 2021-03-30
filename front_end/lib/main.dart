@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'Material App',
       theme: getTheme(),
       home: Scaffold(
-        body: SplashScreen()
+        body: SplashScreen(),
       ),
       initialRoute: SplashScreen.routeName,
       routes: routes,
