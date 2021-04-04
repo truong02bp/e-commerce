@@ -1,3 +1,4 @@
+import 'package:ecommerce/components/bottom_bar.dart';
 import 'package:ecommerce/components/icon_btn_counter.dart';
 import 'package:ecommerce/constants.dart';
 import 'package:ecommerce/screens/home/components/banner.dart';
@@ -64,24 +65,7 @@ class Body extends StatelessWidget {
             SizedBox(
               height: getProportionateHeight(20),
             ),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              GestureDetector(
-                child: SvgPicture.asset("assets/icons/Shop Icon.svg"),
-                onTap: () {},
-              ),
-              GestureDetector(
-                child: SvgPicture.asset("assets/icons/Heart Icon_2.svg"),
-                onTap: () {},
-              ),
-              GestureDetector(
-                child: SvgPicture.asset("assets/icons/Chat bubble Icon.svg"),
-                onTap: () {},
-              ),
-              GestureDetector(
-                child: SvgPicture.asset("assets/icons/User.svg"),
-                onTap: () {},
-              ),
-            ])
+            BottomBar()
           ],
         ),
       ),
