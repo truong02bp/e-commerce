@@ -10,7 +10,7 @@ class AccountScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Account"),
       ),
-      body: Body(),
+      body: SingleChildScrollView(child: Body()),
     );
   }
 }
