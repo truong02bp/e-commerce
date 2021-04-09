@@ -8,7 +8,6 @@ class BannerCategory extends StatelessWidget {
   final String label2;
   final Function onPress;
 
-
   BannerCategory({this.image, this.label, this.label2, this.onPress});
 
   @override
