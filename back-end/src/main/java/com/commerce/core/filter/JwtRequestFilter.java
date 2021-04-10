@@ -1,6 +1,6 @@
 package com.commerce.core.filter;
 
-import com.commerce.common.SecurityConstants;
+import com.commerce.common.constants.SecurityConstants;
 import com.commerce.common.utils.JwtUtils;
 import com.commerce.data.dto.MyUserDetails;
 import com.commerce.service.UserService;

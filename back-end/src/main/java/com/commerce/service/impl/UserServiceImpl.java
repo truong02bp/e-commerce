@@ -1,10 +1,14 @@
 package com.commerce.service.impl;
 
+import com.commerce.common.constants.MessageConstants;
+import com.commerce.common.exception.ApiException;
 import com.commerce.data.dto.MyUserDetails;
 import com.commerce.data.dto.UserDto;
 import com.commerce.data.entities.User;
 import com.commerce.data.repository.UserRepository;
 import com.commerce.service.UserService;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,6 +25,7 @@ import java.util.Properties;
 import java.util.Random;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -29,16 +34,31 @@ public class UserServiceImpl implements UserService {
 
     private final JavaMailSender javaMailSender;
 
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, JavaMailSender javaMailSender) {
-        this.userRepository = userRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.javaMailSender = javaMailSender;
-    }
-
     @Override
     public UserDto save(UserDto userDto) {
         User user = UserDto.toEntity(userDto);
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        if (user.getId() == null)
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        else {
+            User old = userRepository.findById(user.getId()).get();
+            if (user.getAddress() == null)
+                user.setAddress(old.getAddress());
+            if (user.getEmail() == null)
+                user.setEmail(old.getEmail());
+            if (user.getPhone() == null)
+                user.setPhone(old.getPhone());
+            if (user.getFirstName() == null)
+                user.setFirstName(old.getFirstName());
+            if (user.getLastName() == null)
+                user.setLastName(old.getLastName());
+            String oldPassword = userDto.getOldPassword();
+            String newPassword = user.getPassword();
+            if (oldPassword != null && newPassword != null){
+                if (!bCryptPasswordEncoder.matches(oldPassword,old.getPassword()))
+                    throw ApiException.from(HttpStatus.INTERNAL_SERVER_ERROR).message(MessageConstants.OLD_PASSWORD_WRONG);
+                user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+            }
+        }
         return UserDto.toDto(userRepository.save(user));
     }
 

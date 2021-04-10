@@ -1,4 +1,4 @@
-package com.commerce.common;
+package com.commerce.common.constants;
 
 public class SecurityConstants {
 

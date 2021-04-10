@@ -1,6 +1,6 @@
 package com.commerce.common.utils;
 
-import com.commerce.common.SecurityConstants;
+import com.commerce.common.constants.SecurityConstants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

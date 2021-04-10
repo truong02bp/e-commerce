@@ -17,6 +17,7 @@ public class UserDto {
     private String email;
     private String username;
     private String password;
+    private String oldPassword;
     private String firstName;
     private String lastName;
     private String address;
@@ -25,28 +26,19 @@ public class UserDto {
 
     public static User toEntity(UserDto dto) {
         User entity = new User();
-        if (dto.getId() != null)
-            entity.setId(dto.getId());
-        if (dto.getAddress() != null)
-            entity.setAddress(dto.getAddress());
-        if (dto.getEmail() != null)
-            entity.setEmail(dto.getEmail());
-        if (dto.getFirstName() != null)
-            entity.setFirstName(dto.getFirstName());
-        if (dto.getLastName() != null)
-            entity.setLastName(dto.getLastName());
-        if (dto.getPassword() != null)
-            entity.setPassword(dto.getPassword());
-        if (dto.getUsername() != null)
-            entity.setUsername(dto.getUsername());
-        if (dto.getPhone() != null)
-            entity.setPhone(dto.getPhone());
-        if (dto.getRoles() != null)
-            entity.setRoles(dto.getRoles());
+        entity.setId(dto.getId());
+        entity.setAddress(dto.getAddress());
+        entity.setEmail(dto.getEmail());
+        entity.setFirstName(dto.getFirstName());
+        entity.setLastName(dto.getLastName());
+        entity.setPassword(dto.getPassword());
+        entity.setUsername(dto.getUsername());
+        entity.setPhone(dto.getPhone());
+        entity.setRoles(dto.getRoles());
         return entity;
     }
 
-    public static UserDto toDto(User user){
+    public static UserDto toDto(User user) {
         UserDto dto = new UserDto();
         dto.setId(user.getId());
         dto.setAddress(user.getAddress());

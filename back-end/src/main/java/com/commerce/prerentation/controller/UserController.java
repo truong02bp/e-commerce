@@ -4,8 +4,8 @@ import com.commerce.common.utils.JwtUtils;
 import com.commerce.data.dto.MyUserDetails;
 import com.commerce.data.dto.UserDto;
 import com.commerce.data.dto.request.AuthenticationRequest;
-import com.commerce.data.entities.User;
 import com.commerce.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,16 +18,10 @@ import java.net.URISyntaxException;
 
 @RestController
 @RequestMapping("/api")
+@AllArgsConstructor
 public class UserController {
 
     private final UserService userService;
-
-    private final AuthenticationManager authenticationManager;
-
-    public UserController(UserService userService, AuthenticationManager authenticationManager) {
-        this.userService = userService;
-        this.authenticationManager = authenticationManager;
-    }
 
     @GetMapping("/user")
     public ResponseEntity<UserDto> getUser(){
@@ -41,19 +35,10 @@ public class UserController {
         return ResponseEntity.created(new URI("/api/user?id="+res.getId())).body(res);
     }
 
-    @PostMapping("/user/authenticate")
-    public ResponseEntity<String> authentication(@RequestBody AuthenticationRequest authenticationRequest){
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
-                    authenticationRequest.getPassword()));
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        UserDetails userDetails = userService.loadUserByUsername(authenticationRequest.getUsername());
-        String jwt = JwtUtils.generateToken(userDetails);
-        return ResponseEntity.ok(jwt);
+    @PutMapping("/user")
+    public ResponseEntity<UserDto> update(@RequestBody UserDto userDto) {
+        UserDto res = userService.save(userDto);
+        return ResponseEntity.ok(res);
     }
 
     @PostMapping("/user/otp")
