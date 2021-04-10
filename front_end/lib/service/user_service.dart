@@ -54,7 +54,7 @@ class UserService {
     Map<String, String> headers = Map();
     headers["Content-Type"] = "application/json;charset=UTF-8";
     try {
-      final res = await http.post(baseUrl + "/user/authenticate",
+      final res = await http.post(baseUrl + "/authenticate",
           body: jsonEncode(
               AuthenticationRequest(username: username, password: password)),
           headers: headers);

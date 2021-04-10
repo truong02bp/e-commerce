@@ -60,7 +60,7 @@ class Body extends StatelessWidget {
             ],
           ),
         ),
-        BottomBar()
+        Expanded(child: BottomBar())
       ],
     );
   }
