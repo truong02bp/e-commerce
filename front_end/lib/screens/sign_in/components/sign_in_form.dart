@@ -46,9 +46,6 @@ class _SignInFormState extends State<SignInForm> {
                   setState(() {
                     if (value.isNotEmpty && errors.contains(EMPTY_EMAIL_ERROR))
                       errors.remove(EMPTY_EMAIL_ERROR);
-                    if (emailRegExp.hasMatch(value) &&
-                        errors.contains(EMAIL_INVALID_ERROR))
-                      errors.remove(EMAIL_INVALID_ERROR);
                     _username = value;
                   });
                 },
@@ -64,22 +61,15 @@ class _SignInFormState extends State<SignInForm> {
                       });
                     }
                     return "";
-                  } else if (!emailRegExp.hasMatch(value)) {
-                    if (!errors.contains(EMAIL_INVALID_ERROR))
-                      setState(() {
-                        message = EMAIL_INVALID_ERROR;
-                        errors.add(message);
-                      });
-                    return "";
                   }
                   return null;
                 },
                 decoration: InputDecoration(
                   floatingLabelBehavior: FloatingLabelBehavior.always,
-                  labelText: 'Email',
-                  hintText: 'Enter your email',
+                  labelText: 'Username',
+                  hintText: 'Enter your username',
                   suffixIcon: CustomSuffixIcon(
-                    image: "assets/icons/Mail.svg",
+                    image: "assets/icons/User.svg",
                   ),
                 ),
               ),
