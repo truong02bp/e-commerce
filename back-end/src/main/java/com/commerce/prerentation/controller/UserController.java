@@ -1,16 +1,11 @@
 package com.commerce.prerentation.controller;
 
-import com.commerce.common.utils.JwtUtils;
 import com.commerce.data.dto.MyUserDetails;
 import com.commerce.data.dto.UserDto;
-import com.commerce.data.dto.request.AuthenticationRequest;
 import com.commerce.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;

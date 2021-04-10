@@ -1,7 +1,6 @@
 package com.commerce.service.impl;
-
-import com.commerce.common.constants.MessageConstants;
 import com.commerce.common.exception.ApiException;
+import com.commerce.common.constants.MessageConstants;
 import com.commerce.data.dto.MyUserDetails;
 import com.commerce.data.dto.UserDto;
 import com.commerce.data.entities.User;
@@ -21,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.Random;
 
 @Service

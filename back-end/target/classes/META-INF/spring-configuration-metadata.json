@@ -1,0 +1,11 @@
+{
+  "groups": [
+    {
+      "name": "",
+      "type": "com.commerce.Application",
+      "sourceType": "com.commerce.Application"
+    }
+  ],
+  "properties": [],
+  "hints": []
+}

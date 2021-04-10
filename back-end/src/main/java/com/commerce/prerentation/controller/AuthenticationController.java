@@ -6,6 +6,7 @@ import com.commerce.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,13 +24,13 @@ public class AuthenticationController {
     private final UserService userService;
 
     @PostMapping("/authenticate")
-    public ResponseEntity<String> authentication(@RequestBody AuthenticationRequest authenticationRequest){
+    public ResponseEntity<String> authentication(@RequestBody AuthenticationRequest authenticationRequest) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
                     authenticationRequest.getPassword()));
         }
-        catch (Exception e) {
-            e.printStackTrace();
+        catch (BadCredentialsException e) {
+            throw new BadCredentialsException("Invalid username", e);
         }
 
         UserDetails userDetails = userService.loadUserByUsername(authenticationRequest.getUsername());

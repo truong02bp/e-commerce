@@ -16,3 +16,12 @@ spring:
     password: comebackt0me.
     protocol: smtp
     properties: { "mail.smtp.starttls.enable" : "true", "mail.smtp.auth" : "true"}
+minio:
+  bucket:
+    name: images
+  default:
+    folder: /
+  access:
+    name: minioadmin
+    secret: minioadmin
+  url : http://127.0.0.1:9000
