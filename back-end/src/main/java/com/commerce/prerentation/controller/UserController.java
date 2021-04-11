@@ -2,8 +2,10 @@ package com.commerce.prerentation.controller;
 
 import com.commerce.data.dto.MyUserDetails;
 import com.commerce.data.dto.UserDto;
+import com.commerce.service.MinioService;
 import com.commerce.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,9 @@ import java.net.URISyntaxException;
 public class UserController {
 
     private final UserService userService;
+
+    @Autowired
+    MinioService minioService;
 
     @GetMapping("/user")
     public ResponseEntity<UserDto> getUser(){

@@ -13,8 +13,7 @@ public interface MinioService {
 
     List<Bucket> getAllBuckets();
 
-    void upload(String folder, String name, InputStream data) throws IOException, ServerException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException;
+    void upload(String folder, String name, InputStream data);
 
     byte[] getBytes(String key);
-
 }

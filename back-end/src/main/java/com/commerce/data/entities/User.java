@@ -35,6 +35,9 @@ public class User extends BaseEntity {
     @Column(name = "phone")
     private String phone;
 
+    @Column(name = "url_image")
+    private String urlImage;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_role",

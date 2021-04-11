@@ -1,10 +1,12 @@
 package com.commerce.service.impl;
+import com.commerce.common.constants.FolderConstants;
 import com.commerce.common.exception.ApiException;
 import com.commerce.common.constants.MessageConstants;
 import com.commerce.data.dto.MyUserDetails;
 import com.commerce.data.dto.UserDto;
 import com.commerce.data.entities.User;
 import com.commerce.data.repository.UserRepository;
+import com.commerce.service.MinioService;
 import com.commerce.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -26,17 +29,22 @@ import java.util.Random;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
+
+
     private final UserRepository userRepository;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final JavaMailSender javaMailSender;
 
+    private final MinioService minioService;
+
     @Override
     public UserDto save(UserDto userDto) {
         User user = UserDto.toEntity(userDto);
-        if (user.getId() == null)
+        if (user.getId() == null){
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        }
         else {
             User old = userRepository.findById(user.getId()).get();
             if (user.getAddress() == null)
@@ -49,12 +57,24 @@ public class UserServiceImpl implements UserService {
                 user.setFirstName(old.getFirstName());
             if (user.getLastName() == null)
                 user.setLastName(old.getLastName());
+            if (user.getPassword() == null)
+                user.setPassword(old.getPassword());
+            if (user.getUsername() == null)
+                user.setUsername(old.getUsername());
+            // change password
             String oldPassword = userDto.getOldPassword();
             String newPassword = user.getPassword();
             if (oldPassword != null && newPassword != null){
                 if (!bCryptPasswordEncoder.matches(oldPassword,old.getPassword()))
                     throw ApiException.from(HttpStatus.INTERNAL_SERVER_ERROR).message(MessageConstants.OLD_PASSWORD_WRONG);
                 user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+            }
+            // change avatar
+            byte[] data = userDto.getImage().getBytes();
+            if (data != null ){
+                String fileName = "avatar_user_"+user.getId() + "." + userDto.getImage().getType();
+                minioService.upload(FolderConstants.AVATAR_FOLDER,fileName,new ByteArrayInputStream(data));
+                user.setUrlImage(FolderConstants.AVATAR_FOLDER + fileName);
             }
         }
         return UserDto.toDto(userRepository.save(user));

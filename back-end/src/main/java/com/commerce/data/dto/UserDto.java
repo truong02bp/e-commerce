@@ -2,10 +2,11 @@ package com.commerce.data.dto;
 
 import com.commerce.data.entities.Role;
 import com.commerce.data.entities.User;
+import com.commerce.service.MinioService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -13,6 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class UserDto {
+
+    @Autowired
+    MinioService minioService;
 
     private Long id;
     private String email;
@@ -23,6 +27,8 @@ public class UserDto {
     private String lastName;
     private String address;
     private String phone;
+    private ImageDto image;
+    private String urlImage;
     private List<Role> roles;
 
     public static User toEntity(UserDto dto) {
@@ -50,6 +56,7 @@ public class UserDto {
         dto.setPhone(user.getPhone());
         dto.setPhone(user.getPhone());
         dto.setRoles(user.getRoles());
+        dto.setUrlImage(user.getUrlImage());
         return dto;
     }
 

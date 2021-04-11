@@ -7,9 +7,10 @@ import io.minio.UploadObjectArgs;
 import io.minio.errors.*;
 import io.minio.messages.Bucket;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.apache.commons.
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -22,7 +23,8 @@ import java.util.List;
 @Service
 public class MinioServiceImpl implements MinioService {
 
-    private MinioClient minioClient;
+    @Autowired
+    MinioClient minioClient;
 
     @Value("${minio.bucket.name}")
     private String defaultBucket;
@@ -38,12 +40,24 @@ public class MinioServiceImpl implements MinioService {
     }
 
     @Override
-    public void upload(String folder, String name, InputStream data) throws IOException, ServerException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
-        Path tempFile = Files.createTempFile(name,"");
-        Files.copy(data,tempFile, StandardCopyOption.REPLACE_EXISTING);
-        UploadObjectArgs.Builder builder = UploadObjectArgs.builder().bucket(defaultBucket)
-                .object(folder + name).filename(tempFile.toString());
-        minioClient.uploadObject(builder.build());
+    public void upload(String folder, String name, InputStream data) {
+        Path tempFile = null;
+        try {
+            tempFile = Files.createTempFile(name, "");
+            Files.copy(data, tempFile, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (tempFile != null) {
+            try {
+                UploadObjectArgs.Builder builder = UploadObjectArgs.builder().bucket(defaultBucket)
+                        .object(folder + name).filename(tempFile.toString());
+                minioClient.uploadObject(builder.build());
+            } catch (IOException | ErrorResponseException | InsufficientDataException | InternalException | InvalidKeyException | InvalidResponseException | NoSuchAlgorithmException | ServerException | XmlParserException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     @Override
