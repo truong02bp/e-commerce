@@ -22,7 +22,7 @@ class _SignInFormState extends State<SignInForm> {
   String _username;
   String _password;
   AuthenticationBloc _authBloc;
-
+  bool isLoginFailure = false;
   @override
   void initState() {
     _authBloc = BlocProvider.of(context);
@@ -35,6 +35,12 @@ class _SignInFormState extends State<SignInForm> {
       listener: (context, AuthenticationState state){
         if (state is AuthenticationStateSuccess && state.user != null){
           Navigator.pushNamed(context, LoginSuccess.routeName);
+        }
+        else 
+        if (state is AuthenticationStateFailure) {
+            setState(() {
+              isLoginFailure = true;
+            });
         }
       },
       child: Form(
@@ -135,7 +141,11 @@ class _SignInFormState extends State<SignInForm> {
                 ],
               ),
               SizedBox(
-                height: getProportionateHeight(40),
+                height: getProportionateHeight(20),
+              ),
+              buildLoginError(),
+              SizedBox(
+                height: getProportionateHeight(20),
               ),
               DefaultButton(
                 text: 'Continue',
@@ -149,5 +159,10 @@ class _SignInFormState extends State<SignInForm> {
             ],
           )),
     );
+  }
+  Widget buildLoginError(){
+    if (isLoginFailure)
+      return FormError(errors: ["Login failure"]);
+    return Container();  
   }
 }

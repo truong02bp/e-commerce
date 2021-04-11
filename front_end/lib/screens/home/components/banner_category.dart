@@ -26,7 +26,7 @@ class BannerCategory extends StatelessWidget {
                     gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-                        colors: [
+                        colors: <Color>[
                           Color(0xFF343434).withOpacity(0.4),
                           Color(0xFF343434).withOpacity(0.15),
                         ])),

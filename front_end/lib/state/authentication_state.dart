@@ -15,7 +15,5 @@ class AuthenticationStateSuccess extends AuthenticationState {
 
 class AuthenticationStateFailure extends AuthenticationState {
 
-  final String error;
-
-  AuthenticationStateFailure({this.error});
+  
 }

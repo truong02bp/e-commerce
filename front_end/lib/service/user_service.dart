@@ -10,28 +10,30 @@ import 'package:http/http.dart' as http;
 class UserService {
   ApiService apiService = ApiService();
 
-  Future<String> sendOtp({String email, String firstName, String lastName}) async {
+  Future<String> sendOtp(
+      {String email, String firstName, String lastName}) async {
     try {
-      final res = await http.post(baseUrl + "/user/otp?"
-      + "email=" + email
-      + "&firstName=" + firstName
-      + "&lastName=" + lastName);
-      if (res.statusCode == 200){
+      final res = await http.post(baseUrl +
+          "/user/otp?" +
+          "email=" +
+          email +
+          "&firstName=" +
+          firstName +
+          "&lastName=" +
+          lastName);
+      if (res.statusCode == 200) {
         return res.body;
-      }
-      else
+      } else
         throw new Exception(res.statusCode.toString());
-    }
-    catch (exception) {
+    } catch (exception) {
       throw new Exception(exception.toString());
     }
   }
-  
+
   Future<bool> isEmailExisted({String email}) async {
     try {
       final res = await http.post(baseUrl + "/user/check-email?email=" + email);
-      if (res.body == "true")
-        return true;
+      if (res.body == "true") return true;
       return false;
     } catch (exception) {
       throw new Exception(exception.toString());
@@ -42,8 +44,7 @@ class UserService {
     try {
       final res = await http
           .post(baseUrl + "/user/check-username?username=" + username);
-      if (res.body == "true")
-        return true;
+      if (res.body == "true") return true;
       return false;
     } catch (exception) {
       throw new Exception(exception.toString());
@@ -53,16 +54,12 @@ class UserService {
   Future<String> authenticate(String username, String password) async {
     Map<String, String> headers = Map();
     headers["Content-Type"] = "application/json;charset=UTF-8";
-    try {
-      final res = await http.post(baseUrl + "/authenticate",
-          body: jsonEncode(
-              AuthenticationRequest(username: username, password: password)),
-          headers: headers);
-      String token = res.body;
-      return token;
-    } catch (exception) {
-      throw Exception(exception.toString());
-    }
+    ApiModel apiModel = new ApiModel(
+        body: AuthenticationRequest(username: username, password: password),
+        headers: headers,
+        url: baseUrl + "/authenticate");
+    String token = await apiService.post(apiModel);
+    return token;
   }
 
   Future<User> getUserInfor(String token) async {
@@ -76,21 +73,20 @@ class UserService {
           final jsonData = jsonDecode(response.body);
           return User.formJson(jsonData);
         });
-    return apiService.load(apiModel);
+    User user = await apiService.load(apiModel);
+    return user;
   }
-  
+
   void create(User user) async {
     try {
       Map<String, String> headers = Map();
       headers["Content-Type"] = "application/json";
-      final res = await http.post(baseUrl+"/user", body: jsonEncode(user), headers: headers);
+      final res = await http.post(baseUrl + "/user",
+          body: jsonEncode(user), headers: headers);
       print(res.toString());
-      if (res.statusCode != 200)
-        throw new Exception(res.statusCode.toString());
-    }
-    catch (exception){
+      if (res.statusCode != 200) throw new Exception(res.statusCode.toString());
+    } catch (exception) {
       throw Exception(exception.toString());
     }
   }
-  
 }
