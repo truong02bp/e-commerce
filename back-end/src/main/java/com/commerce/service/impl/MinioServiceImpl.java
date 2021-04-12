@@ -50,7 +50,7 @@ public class MinioServiceImpl implements MinioService {
         }
         if (tempFile != null) {
             try {
-                UploadObjectArgs.Builder builder = UploadObjectArgs.builder().bucket(defaultBucket)
+                UploadObjectArgs.Builder builder = UploadObjectArgs.builder().bucket(defaultBucket).contentType("image/jpeg")
                         .object(folder + name).filename(tempFile.toString());
                 minioClient.uploadObject(builder.build());
             } catch (IOException | ErrorResponseException | InsufficientDataException | InternalException | InvalidKeyException | InvalidResponseException | NoSuchAlgorithmException | ServerException | XmlParserException e) {
