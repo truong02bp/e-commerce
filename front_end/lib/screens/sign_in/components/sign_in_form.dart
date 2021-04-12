@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ecommerce/constants.dart';
 import '../../../size_config.dart';
 import '../../../components/custom_suffix_icons.dart';
+
 class SignInForm extends StatefulWidget {
   @override
   _SignInFormState createState() => _SignInFormState();
@@ -23,6 +24,7 @@ class _SignInFormState extends State<SignInForm> {
   String _password;
   AuthenticationBloc _authBloc;
   bool isLoginFailure = false;
+  bool isLoading = false;
   @override
   void initState() {
     _authBloc = BlocProvider.of(context);
@@ -32,15 +34,17 @@ class _SignInFormState extends State<SignInForm> {
   Widget build(BuildContext context) {
     return BlocListener(
       cubit: _authBloc,
-      listener: (context, AuthenticationState state){
-        if (state is AuthenticationStateSuccess && state.user != null){
+      listener: (context, AuthenticationState state) {
+        setState(() {
+          isLoginFailure = false;
+          isLoading = false;
+        });
+        if (state is AuthenticationStateSuccess && state.user != null) {
           Navigator.pushNamed(context, LoginSuccess.routeName);
-        }
-        else 
-        if (state is AuthenticationStateFailure) {
-            setState(() {
-              isLoginFailure = true;
-            });
+        } else if (state is AuthenticationStateFailure) {
+          setState(() {
+            isLoginFailure = true;
+          });
         }
       },
       child: Form(
@@ -85,7 +89,8 @@ class _SignInFormState extends State<SignInForm> {
               TextFormField(
                 onChanged: (value) {
                   setState(() {
-                    if (value.isNotEmpty && errors.contains(EMPTY_PASSWORD_ERROR))
+                    if (value.isNotEmpty &&
+                        errors.contains(EMPTY_PASSWORD_ERROR))
                       errors.remove(EMPTY_PASSWORD_ERROR);
                     _password = value;
                   });
@@ -132,7 +137,8 @@ class _SignInFormState extends State<SignInForm> {
                   Spacer(),
                   GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pushNamed(ForgotPassword.routeName);
+                        Navigator.of(context)
+                            .pushNamed(ForgotPassword.routeName);
                       },
                       child: Text(
                         'Forgot password',
@@ -152,7 +158,11 @@ class _SignInFormState extends State<SignInForm> {
                 press: () {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
-                    _authBloc.add(LogInEvent(username: _username, password: _password));
+                    setState(() {
+                      isLoading = true;
+                    });
+                    _authBloc.add(
+                        LogInEvent(username: _username, password: _password));
                   }
                 },
               ),
@@ -160,9 +170,11 @@ class _SignInFormState extends State<SignInForm> {
           )),
     );
   }
-  Widget buildLoginError(){
-    if (isLoginFailure)
-      return FormError(errors: ["Login failure"]);
-    return Container();  
+
+  Widget buildLoginError() {
+    if (isLoading)
+      return Image.asset("assets/images/loading.gif", height: 100, width: 100,);
+    if (isLoginFailure) return FormError(errors: ["Login failure"]);
+    return Container();
   }
 }

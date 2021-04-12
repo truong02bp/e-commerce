@@ -1,9 +1,9 @@
 import 'package:ecommerce/model/user.dart';
 import 'package:ecommerce/screens/change_password/change_password_screen.dart';
-import 'package:ecommerce/screens/profile/components/avatar.dart';
+import 'package:ecommerce/components/avatar.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
-
+import 'input_card.dart';
 class Body extends StatelessWidget {
   final User user = User(
       email: "truong02.bp@gmail",
@@ -23,7 +23,7 @@ class Body extends StatelessWidget {
         SizedBox(
           height: getProportionateHeight(25),
         ),
-        Avatar(),
+        Avatar(image: "http://localhost:9000/minio/images/avatar/avatar_user_3.jpg",),
         SizedBox(
           height: getProportionateHeight(15),
         ),
@@ -31,10 +31,10 @@ class Body extends StatelessWidget {
         SizedBox(
           height: getProportionateHeight(15),
         ),
-        buildInput(readOnly: true, initialValue: user.email, prefixText: "Email"),
-        buildInput(readOnly: false, initialValue: user.firstName, prefixText: "First Name", controller: _firstNameController),
-        buildInput(readOnly: false, initialValue: user.lastName, prefixText: "Last Name", controller: _lastNameController),
-        buildInput(readOnly: false, initialValue: user.address, prefixText: "Address", controller: _addressController),
+        InputCard(readOnly: true, initialValue: user.email, prefixText: "Email"),
+        InputCard(readOnly: false, initialValue: user.firstName, prefixText: "First Name", controller: _firstNameController),
+        InputCard(readOnly: false, initialValue: user.lastName, prefixText: "Last Name", controller: _lastNameController),
+        InputCard(readOnly: false, initialValue: user.address, prefixText: "Address", controller: _addressController),
         buildPhoneNumber(),
         SizedBox(height: 25,),
         Padding(
@@ -67,37 +67,14 @@ class Body extends StatelessWidget {
     );
   }
 
-  InputDecoration inputDecoration({prefixText}) {
-    return InputDecoration(
-      focusedBorder:
-          UnderlineInputBorder(borderRadius: BorderRadius.circular(25)),
-      enabledBorder:
-          UnderlineInputBorder(borderRadius: BorderRadius.circular(25)),
-      errorBorder:
-          UnderlineInputBorder(borderRadius: BorderRadius.circular(25)),
-      disabledBorder:
-          UnderlineInputBorder(borderRadius: BorderRadius.circular(25)),
-      prefixText: prefixText,
-      prefixStyle: TextStyle(
-        color: Colors.black.withOpacity(0.45),
-      ),
-    );
-  }
-  TextFormField buildInput({TextEditingController controller, bool readOnly, String initialValue, String prefixText}) {
-    return TextFormField(
-      readOnly: readOnly,
-      initialValue: initialValue,
-      decoration: inputDecoration(prefixText: prefixText),
-      textAlign: TextAlign.end,
-    );
-  }
+  
 
   TextFormField buildPhoneNumber() {
     return TextFormField(
       controller: _phoneController,
       keyboardType: TextInputType.number,
       initialValue: "${user.phone}",
-      decoration: inputDecoration(prefixText: "Phone number"),
+      decoration: InputCard.inputDecoration(prefixText: "Phone number"),
       textAlign: TextAlign.end,
     );
   }

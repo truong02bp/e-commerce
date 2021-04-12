@@ -6,7 +6,7 @@ import 'package:ecommerce/model/authentication_request.dart';
 import 'package:ecommerce/model/user.dart';
 import 'package:ecommerce/service/api_service.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:shared_preferences/shared_preferences.dart';
 class UserService {
   ApiService apiService = ApiService();
 
@@ -57,8 +57,12 @@ class UserService {
     ApiModel apiModel = new ApiModel(
         body: AuthenticationRequest(username: username, password: password),
         headers: headers,
-        url: baseUrl + "/authenticate");
+        url: baseUrl + "/authenticate");    
     String token = await apiService.post(apiModel);
+    if (token != null) {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      preferences.setString("token",token);
+    }
     return token;
   }
 
@@ -74,6 +78,10 @@ class UserService {
           return User.formJson(jsonData);
         });
     User user = await apiService.load(apiModel);
+    if (user != null) {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      preferences.setString("user", jsonEncode(user));
+    }
     return user;
   }
 

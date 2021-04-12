@@ -1,7 +1,9 @@
+import 'package:ecommerce/blocs/user_bloc.dart';
 import 'package:ecommerce/screens/profile/components/body.dart';
 import 'package:flutter/material.dart';
-class ProfileScreen extends StatelessWidget {
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+class ProfileScreen extends StatelessWidget {
   static final String routeName = "/profile";
 
   @override
@@ -10,7 +12,9 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Profile'),
       ),
-      body: Body(),
+      body: BlocProvider(
+        create: (context) => UserBloc(),
+        child: Body()),
     );
   }
 }

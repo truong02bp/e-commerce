@@ -1,9 +1,15 @@
+import 'package:ecommerce/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../size_config.dart';
+import '../size_config.dart';
 
 class Avatar extends StatelessWidget {
+
+  final String image;
+
+  Avatar({this.image});
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -13,8 +19,8 @@ class Avatar extends StatelessWidget {
         child:
             Stack(fit: StackFit.expand, overflow: Overflow.visible, children: [
           CircleAvatar(
-            backgroundImage: AssetImage(
-              "assets/images/Profile Image.png",
+            backgroundImage: NetworkImage(
+              "http://192.168.1.13:9000/images$image"
             ),
           ),
           Positioned(

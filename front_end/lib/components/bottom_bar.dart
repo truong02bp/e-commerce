@@ -1,3 +1,4 @@
+import 'package:ecommerce/screens/home/home_screen.dart';
 import 'package:ecommerce/screens/profile/profile_screen.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,9 @@ class BottomBar extends StatelessWidget {
                         child: box(
                             widget:
                                 SvgPicture.asset("assets/icons/Shop Icon.svg")),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(context, HomeScreen.routeName);
+                        },
                       ),
                       GestureDetector(
                         child: box(

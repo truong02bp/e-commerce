@@ -1,11 +1,14 @@
+import 'package:ecommerce/blocs/user_bloc.dart';
 import 'package:ecommerce/components/bottom_bar.dart';
+import 'package:ecommerce/model/user.dart';
 import 'package:ecommerce/screens/account/account_screen.dart';
-import 'package:ecommerce/screens/profile/components/avatar.dart';
+import 'package:ecommerce/components/avatar.dart';
+import 'package:ecommerce/screens/profile/components/information.dart';
 import 'package:ecommerce/screens/profile/components/profile_card.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
-
 class Body extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -13,9 +16,9 @@ class Body extends StatelessWidget {
         SizedBox(
           height: getProportionateHeight(25),
         ),
-        Avatar(),
+        Information(),
         Padding(
-          padding: const EdgeInsets.only(top: 50, left: 25, right: 25),
+          padding: const EdgeInsets.only(top: 20, left: 25, right: 25),
           child: Column(
             children: [
               ProfileCard(
