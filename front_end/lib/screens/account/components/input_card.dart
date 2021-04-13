@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class InputCard extends StatelessWidget {
-  final TextEditingController controller;
   final bool readOnly;
   final String initialValue;
   final String prefixText;
-
-  InputCard({this.controller, this.initialValue, this.prefixText, this.readOnly});
+  Function onChange;
+  InputCard({this.onChange, this.initialValue, this.prefixText, this.readOnly});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChange,
       readOnly: readOnly,
       initialValue: initialValue,
       decoration: inputDecoration(prefixText: prefixText),

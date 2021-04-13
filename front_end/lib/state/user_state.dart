@@ -14,6 +14,10 @@ class UserStateInitial extends UserState {
 }
 
 class UserStateUpdateSuccess extends UserState {
+  
+  final User user;
+
+  UserStateUpdateSuccess({this.user});
 
 }
 

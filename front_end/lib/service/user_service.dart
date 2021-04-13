@@ -74,7 +74,8 @@ class UserService {
         url: baseUrl + "/user",
         headers: headers,
         parse: (response) {
-          final jsonData = jsonDecode(response.body);
+          String data = Utf8Decoder().convert(response.bodyBytes);
+          final jsonData = jsonDecode(data);
           return User.formJson(jsonData);
         });
     User user = await apiService.load(apiModel);
@@ -96,5 +97,25 @@ class UserService {
     } catch (exception) {
       throw Exception(exception.toString());
     }
+  }
+
+  Future<User> update(User user) async {
+    Map<String, String> headers = Map();
+    headers["Content-Type"] = "application/json";
+    ApiModel<User> apiModel = ApiModel(
+        url: baseUrl + "/user",
+        body: user,
+        headers: headers,
+        parse: (response) {
+          String data = Utf8Decoder().convert(response.bodyBytes);
+          final jsonData = jsonDecode(data);
+          return User.formJson(jsonData);
+        });
+    User res = await apiService.put(apiModel);
+    if (res != null) {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      preferences.setString("user", jsonEncode(res));
+    }
+    return res;
   }
 }

@@ -1,4 +1,7 @@
+
+import 'package:ecommerce/blocs/user_bloc.dart';
 import 'package:ecommerce/screens/account/components/body.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 class AccountScreen extends StatelessWidget {
 
@@ -10,7 +13,10 @@ class AccountScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Account"),
       ),
-      body: SingleChildScrollView(child: Body()),
+      body: BlocProvider(
+        create: (context) => UserBloc(),
+        child: SingleChildScrollView(child: Body())
+        ),
     );
   }
 }

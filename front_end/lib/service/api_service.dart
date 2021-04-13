@@ -29,4 +29,18 @@ class ApiService {
       throw Exception(exception.toString());
     }
   }
+
+  Future<dynamic> put<T>(ApiModel<T> resource) async {
+    try {
+      final res = await http.put(resource.url,
+          body: jsonEncode(resource.body), headers: resource.headers);
+      if (res.statusCode == 200) {
+        if (resource.parse != null) return resource.parse(res);
+        return res.body;
+      }
+      return null;
+    } catch (exception) {
+      throw Exception(exception.toString());
+    }
+  }
 }
