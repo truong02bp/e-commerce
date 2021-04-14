@@ -31,39 +31,47 @@ class _AvatarState extends State<Avatar> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        height: getProportionateHeight(150),
-        width: getProportionateWidth(150),
-        child:
-            Stack(fit: StackFit.expand, overflow: Overflow.visible, children: [
-          CircleAvatar(
-            backgroundImage: _image == null
-                ? NetworkImage("$minioUrl$imageUrl")
-                : FileImage(File(_image.path)),
-          ),
-          Positioned(
-            right: -10,
-            bottom: 0,
-            child: SizedBox(
-              height: getProportionateHeight(40),
-              width: getProportionateWidth(40),
-              child: FlatButton(
-                padding: EdgeInsets.zero,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
-                    side: BorderSide(color: Colors.white)),
-                color: Color(0xFFF5F6F9),
-                onPressed: () {
-                  showChoisePickImage();
-                },
-                child: SvgPicture.asset(
-                  "assets/icons/Camera Icon.svg",
+    return BlocListener(
+      cubit: _userBloc,
+      listener: (context, state){
+        if (state is )
+      },
+      child: Center(
+        child: SizedBox(
+          height: getProportionateHeight(150),
+          width: getProportionateWidth(150),
+          child: Stack(
+              fit: StackFit.expand,
+              overflow: Overflow.visible,
+              children: [
+                CircleAvatar(
+                  backgroundImage: _image == null
+                      ? NetworkImage("$minioUrl$imageUrl")
+                      : FileImage(File(_image.path)),
                 ),
-              ),
-            ),
-          )
-        ]),
+                Positioned(
+                  right: -10,
+                  bottom: 0,
+                  child: SizedBox(
+                    height: getProportionateHeight(40),
+                    width: getProportionateWidth(40),
+                    child: FlatButton(
+                      padding: EdgeInsets.zero,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                          side: BorderSide(color: Colors.white)),
+                      color: Color(0xFFF5F6F9),
+                      onPressed: () {
+                        showChoisePickImage();
+                      },
+                      child: SvgPicture.asset(
+                        "assets/icons/Camera Icon.svg",
+                      ),
+                    ),
+                  ),
+                )
+              ]),
+        ),
       ),
     );
   }

@@ -21,10 +21,13 @@ class UserBloc extends Bloc<UserEvent,UserState> {
     }
     else 
       if (event is UserEventUpdate){
-        print(event.user);
         User user = await userService.update(event.user);
         yield UserStateUpdateSuccess(user: user);
       }
+      else 
+        if (event is UserEventUpdateAvatar){
+            User newUser = User()
+        }
   }
 
 }

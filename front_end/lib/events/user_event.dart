@@ -19,3 +19,11 @@ class UserEventUpdate extends UserEvent {
   UserEventUpdate({this.user});
 
 }
+
+class UserEventUpdateAvatar extends UserEvent {
+  final String baseImage;
+
+  UserEventUpdateAvatar({this.baseImage});
+
+
+}
