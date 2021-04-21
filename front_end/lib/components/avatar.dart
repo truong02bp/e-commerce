@@ -26,6 +26,7 @@ class _AvatarState extends State<Avatar> {
   @override
   void initState() {
     _userBloc = BlocProvider.of(context);
+    print(_userBloc);
     imageUrl = widget.image;
   }
 
@@ -34,7 +35,8 @@ class _AvatarState extends State<Avatar> {
     return BlocListener(
       cubit: _userBloc,
       listener: (context, state){
-        if (state is )
+        print(state);
+        // if (state is )
       },
       child: Center(
         child: SizedBox(

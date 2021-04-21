@@ -23,9 +23,9 @@ final otpDecoration = InputDecoration(
         borderSide: BorderSide(color: kPrimaryColor)
     )
 );
-
-const String baseUrl = "http://192.168.1.13:8080/api";
-const String minioUrl = "http://192.168.1.13:9000/images";
+const String ip = "192.168.1.10";
+const String baseUrl = "http://$ip:8080/api";
+const String minioUrl = "http://$ip:9000/images";
 
 Widget buildLoading({bool isLoading}) {
   if (isLoading)

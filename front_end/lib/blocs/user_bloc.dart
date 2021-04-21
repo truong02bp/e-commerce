@@ -26,7 +26,7 @@ class UserBloc extends Bloc<UserEvent,UserState> {
       }
       else 
         if (event is UserEventUpdateAvatar){
-            User newUser = User()
+            // User newUser = User()
         }
   }
 
