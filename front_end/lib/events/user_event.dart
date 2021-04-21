@@ -1,5 +1,6 @@
 import 'package:ecommerce/model/user.dart';
-
+import 'package:ecommerce/state/user_state.dart';
+import 'package:image_picker/image_picker.dart';
 class UserEvent {
 
 }
@@ -21,9 +22,9 @@ class UserEventUpdate extends UserEvent {
 }
 
 class UserEventUpdateAvatar extends UserEvent {
-  final String baseImage;
+  final PickedFile image;
 
-  UserEventUpdateAvatar({this.baseImage});
+  UserEventUpdateAvatar({this.image});
 
 
 }

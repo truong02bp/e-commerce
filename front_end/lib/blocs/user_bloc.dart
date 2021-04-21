@@ -16,7 +16,7 @@ class UserBloc extends Bloc<UserEvent,UserState> {
   Stream<UserState> mapEventToState(UserEvent event) async* {
     if (event is UserEventInitial) {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-      User user = User.formJson(jsonDecode(preferences.getString("user")));
+      User user = User.fromJson(jsonDecode(preferences.getString("user")));
       yield UserStateInitial(user: user);
     }
     else 
@@ -26,6 +26,10 @@ class UserBloc extends Bloc<UserEvent,UserState> {
       }
       else 
         if (event is UserEventUpdateAvatar){
+          List<int> bytes = await event.image.readAsBytes();
+          String baseImage = base64Encode(bytes);
+          
+          yield UserStateUpdateAvatarSuccess();
             // User newUser = User()
         }
   }

@@ -1,7 +1,10 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:ecommerce/blocs/user_bloc.dart';
 import 'package:ecommerce/constants.dart';
+import 'package:ecommerce/events/user_event.dart';
+import 'package:ecommerce/state/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../size_config.dart';
@@ -26,7 +29,6 @@ class _AvatarState extends State<Avatar> {
   @override
   void initState() {
     _userBloc = BlocProvider.of(context);
-    print(_userBloc);
     imageUrl = widget.image;
   }
 
@@ -34,9 +36,10 @@ class _AvatarState extends State<Avatar> {
   Widget build(BuildContext context) {
     return BlocListener(
       cubit: _userBloc,
-      listener: (context, state){
-        print(state);
-        // if (state is )
+      listener: (context, state) {
+        if (state is UserStateUpdateAvatarSuccess) {
+          print('ok');
+        }
       },
       child: Center(
         child: SizedBox(
@@ -80,15 +83,25 @@ class _AvatarState extends State<Avatar> {
 
   Widget bottomSheet() {
     return Container(
+      height: 70,
       child: Padding(
         padding: const EdgeInsets.only(left: 11),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text('Are you sure about this update ? '),
-            FlatButton(onPressed: () {}, child: Text('Yes')),
+            Text('Are you sure about this update ? ',),
+            FlatButton(
+                onPressed: (){
+                  print('let go');
+                  _userBloc.add(
+                      UserEventUpdateAvatar(image: _image));
+                },
+                child: Text('Yes')),
             FlatButton(
                 onPressed: () {
+                  setState(() {
+                    _image = null;
+                  });
                   Navigator.of(context).pop();
                 },
                 child: Text('No')),
