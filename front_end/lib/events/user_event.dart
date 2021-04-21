@@ -27,5 +27,14 @@ class UserEventUpdateAvatar extends UserEvent {
 
   UserEventUpdateAvatar({this.image});
 
+}
+
+class UserEventChangePassword extends UserEvent {
+  
+  final String oldPassword;
+
+  final String newPassword;
+
+  UserEventChangePassword({this.newPassword, this.oldPassword});
 
 }

@@ -132,7 +132,28 @@ class UserService {
           return User.fromJson(jsonData);
       }
     );
-    User res = await apiService.post(apiModel);
+    User res = await apiService.put(apiModel);
+    if (res != null){
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      preferences.setString("user", jsonEncode(res));
+    }
+    return res;
+  }
+
+  Future<User> updatePassword({User user}) async{
+    Map<String,String> headers = Map();
+    headers["Content-Type"] = "application/json";
+    ApiModel<User> apiModel = ApiModel(
+      url : baseUrl + "/user/update-password",
+      body: user,
+      headers: headers,
+      parse: (response) {
+        String data = Utf8Decoder().convert(response.bodyBytes);
+          final jsonData = jsonDecode(data);
+          return User.fromJson(jsonData);
+      }
+    );
+    User res = await apiService.put(apiModel);
     if (res != null){
       SharedPreferences preferences = await SharedPreferences.getInstance();
       preferences.setString("user", jsonEncode(res));

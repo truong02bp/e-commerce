@@ -23,3 +23,9 @@ class UserStateUpdateAvatarSuccess extends UserState {
 }
 
 class UserStateUpdateAvatarFailuare extends UserState {}
+
+class UserStateUpdatePasswordFailuare extends UserState {}
+
+class UserStateUpdatePasswordSuccess extends UserState {}
+
+

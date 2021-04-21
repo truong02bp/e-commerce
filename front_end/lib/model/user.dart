@@ -12,7 +12,7 @@ class User {
   String email;
   String address;
   String urlImage;
-  
+  String newPassword;
   User(
       {this.id,
       this.username,
@@ -20,7 +20,7 @@ class User {
       this.firstName,
       this.lastName,
       this.phone,
-      this.email, this.address, this.urlImage});
+      this.email, this.address, this.urlImage, this.newPassword});
   factory User.fromJson(Map<String,dynamic> jsonMap) => _$UserFromJson(jsonMap);
   Map<String,dynamic> toJson() => _$UserToJson(this);
 }

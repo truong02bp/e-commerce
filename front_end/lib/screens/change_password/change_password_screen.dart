@@ -1,5 +1,7 @@
+import 'package:ecommerce/blocs/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'components/body.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 class ChangePasswordScreen extends StatelessWidget {
 
   static final String routeName = "/change-password";
@@ -10,7 +12,10 @@ class ChangePasswordScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Change password'),
       ),
-      body: Body(),
+      body: BlocProvider(
+        create: (context) => UserBloc(),
+        child: Body()
+        ),
     );
   }
 }

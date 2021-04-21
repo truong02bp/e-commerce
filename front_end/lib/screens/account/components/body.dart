@@ -50,7 +50,7 @@ class _BodyState extends State<Body> {
             setState(() {
               user = state.user;
               isUpdateSuccess = true;
-              showUpdateMessage(context);
+              showUpdateMessage(context,isUpdateSuccess);
             });
           }
         },
@@ -173,36 +173,7 @@ class _BodyState extends State<Body> {
     _userBloc.add(UserEventUpdate(user: updateUser));
   }
 
-  void showUpdateMessage(BuildContext context) {
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      content: SizedBox(height: getProportionateHeight(100), child: Center(child: isUpdateSuccess == true
-          ? Column(
-            children: [
-              Text(
-                  'Update information success !',
-                  style:
-                      TextStyle(fontSize: 20, color: Colors.green.withOpacity(0.8)),
-                ),
-              SizedBox(height: getProportionateHeight(10),),
-              Image.asset("assets/images/success.jpg", height: 60, width: 100,)  
-            ],
-          )
-          : Text(
-              'Update information failure !',
-              style: TextStyle(
-                  fontSize: 20, color: Colors.redAccent.withOpacity(0.8)),
-            ),),),
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
+  
 
   TextFormField buildPhoneNumber() {
     return TextFormField(

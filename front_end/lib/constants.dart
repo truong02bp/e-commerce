@@ -39,3 +39,34 @@ Widget buildLoading({bool isLoading}) {
     );
   return Container();
 }
+
+void showUpdateMessage(BuildContext context, bool isUpdateSuccess) {
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      content: SizedBox(height: getProportionateHeight(100), child: Center(child: isUpdateSuccess == true
+          ? Column(
+            children: [
+              Text(
+                  'Update information success !',
+                  style:
+                      TextStyle(fontSize: 20, color: Colors.green.withOpacity(0.8)),
+                ),
+              SizedBox(height: getProportionateHeight(10),),
+              Image.asset("assets/images/success.jpg", height: 60, width: 100,)  
+            ],
+          )
+          : Text(
+              'Update information failure !',
+              style: TextStyle(
+                  fontSize: 20, color: Colors.redAccent.withOpacity(0.8)),
+            ),),),
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }

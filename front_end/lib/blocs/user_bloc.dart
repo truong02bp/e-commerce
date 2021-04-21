@@ -33,10 +33,21 @@ class UserBloc extends Bloc<UserEvent,UserState> {
           SharedPreferences preferences = await SharedPreferences.getInstance();
           User user = User.fromJson(jsonDecode(preferences.getString("user")));
           user = await userService.updateAvatar(id: user.id, image: image);
-          print(user);
           yield UserStateUpdateAvatarSuccess(imageUrl: user.urlImage);
             // User newUser = User()
         }
+        else 
+          if (event is UserEventChangePassword) {
+            SharedPreferences preferences = await SharedPreferences.getInstance();
+            User user = User.fromJson(jsonDecode(preferences.getString("user")));
+            user.newPassword = event.newPassword;
+            user.password = event.oldPassword;
+            User newUser = await userService.updatePassword(user: user);
+            if (newUser != null)
+              yield UserStateUpdatePasswordSuccess();
+            else 
+              yield UserStateUpdatePasswordFailuare();  
+          }
   }
 
 }
