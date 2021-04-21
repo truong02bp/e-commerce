@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:ecommerce/constants.dart';
 import 'package:ecommerce/model/api_model.dart';
 import 'package:ecommerce/model/authentication_request.dart';
+import 'package:ecommerce/model/image.dart';
 import 'package:ecommerce/model/user.dart';
 import 'package:ecommerce/service/api_service.dart';
 import 'package:http/http.dart' as http;
@@ -76,7 +77,7 @@ class UserService {
         parse: (response) {
           String data = Utf8Decoder().convert(response.bodyBytes);
           final jsonData = jsonDecode(data);
-          return User.formJson(jsonData);
+          return User.fromJson(jsonData);
         });
     User user = await apiService.load(apiModel);
     if (user != null) {
@@ -109,10 +110,30 @@ class UserService {
         parse: (response) {
           String data = Utf8Decoder().convert(response.bodyBytes);
           final jsonData = jsonDecode(data);
-          return User.formJson(jsonData);
+          return User.fromJson(jsonData);
         });
     User res = await apiService.put(apiModel);
     if (res != null) {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      preferences.setString("user", jsonEncode(res));
+    }
+    return res;
+  }
+  Future<User> updateAvatar({int id, Image image}) async{
+    Map<String,String> headers = Map();
+    headers["Content-Type"] = "application/json";
+    ApiModel<User> apiModel = ApiModel(
+      url : baseUrl + "/user/update-avatar/$id",
+      body: image,
+      headers: headers,
+      parse: (response) {
+        String data = Utf8Decoder().convert(response.bodyBytes);
+          final jsonData = jsonDecode(data);
+          return User.fromJson(jsonData);
+      }
+    );
+    User res = await apiService.post(apiModel);
+    if (res != null){
       SharedPreferences preferences = await SharedPreferences.getInstance();
       preferences.setString("user", jsonEncode(res));
     }

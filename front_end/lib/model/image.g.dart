@@ -8,12 +8,12 @@ part of 'image.dart';
 
 Image _$ImageFromJson(Map<String, dynamic> json) {
   return Image(
-    baseImage: json['baseImage'] as String,
+    bytes: json['bytes'] as String,
     type: json['type'] as String,
   );
 }
 
 Map<String, dynamic> _$ImageToJson(Image instance) => <String, dynamic>{
-      'baseImage': instance.baseImage,
+      'bytes': instance.bytes,
       'type': instance.type,
     };

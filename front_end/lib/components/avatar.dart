@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:ecommerce/blocs/user_bloc.dart';
@@ -38,7 +37,9 @@ class _AvatarState extends State<Avatar> {
       cubit: _userBloc,
       listener: (context, state) {
         if (state is UserStateUpdateAvatarSuccess) {
-          print('ok');
+          setState(() {
+            imageUrl = state.imageUrl;
+          });
         }
       },
       child: Center(
@@ -92,9 +93,9 @@ class _AvatarState extends State<Avatar> {
             Text('Are you sure about this update ? ',),
             FlatButton(
                 onPressed: (){
-                  print('let go');
                   _userBloc.add(
                       UserEventUpdateAvatar(image: _image));
+                   Navigator.of(context).pop();   
                 },
                 child: Text('Yes')),
             FlatButton(

@@ -6,10 +6,10 @@ part 'image.g.dart';
 @JsonSerializable(explicitToJson: true)
 class Image {
   
-  String baseImage;
+  String bytes;
   String type;
 
-  Image({this.baseImage,this.type});
+  Image({this.bytes,this.type});
 
   factory Image.fromJson(Map<String,dynamic> json) => _$ImageFromJson(json);
 

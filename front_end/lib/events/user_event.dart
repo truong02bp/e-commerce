@@ -22,6 +22,7 @@ class UserEventUpdate extends UserEvent {
 }
 
 class UserEventUpdateAvatar extends UserEvent {
+  
   final PickedFile image;
 
   UserEventUpdateAvatar({this.image});

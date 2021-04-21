@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:ecommerce/events/user_event.dart';
+import 'package:ecommerce/model/image.dart';
 import 'package:ecommerce/model/user.dart';
 import 'package:ecommerce/service/user_service.dart';
 import 'package:ecommerce/state/user_state.dart';
@@ -28,8 +29,12 @@ class UserBloc extends Bloc<UserEvent,UserState> {
         if (event is UserEventUpdateAvatar){
           List<int> bytes = await event.image.readAsBytes();
           String baseImage = base64Encode(bytes);
-          
-          yield UserStateUpdateAvatarSuccess();
+          Image image = Image(bytes : baseImage, type: "jpg");
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          User user = User.fromJson(jsonDecode(preferences.getString("user")));
+          user = await userService.updateAvatar(id: user.id, image: image);
+          print(user);
+          yield UserStateUpdateAvatarSuccess(imageUrl: user.urlImage);
             // User newUser = User()
         }
   }

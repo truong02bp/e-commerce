@@ -25,7 +25,7 @@ class Body extends StatelessWidget {
                 icon: "assets/icons/User.svg",
                 text: "My Account",
                 onTap: () {
-                  Navigator.pushNamed(context, AccountScreen.routeName);
+                  Navigator.popAndPushNamed(context, AccountScreen.routeName);
                 },
               ),
               SizedBox(
