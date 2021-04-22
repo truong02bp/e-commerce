@@ -1,5 +1,6 @@
 package com.commerce.prerentation.controller;
 
+import com.commerce.data.dto.ImageDto;
 import com.commerce.data.dto.MyUserDetails;
 import com.commerce.data.dto.UserDto;
 import com.commerce.service.MinioService;
@@ -20,9 +21,6 @@ public class UserController {
 
     private final UserService userService;
 
-    @Autowired
-    MinioService minioService;
-
     @GetMapping("/user")
     public ResponseEntity<UserDto> getUser(){
         MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -38,6 +36,19 @@ public class UserController {
     @PutMapping("/user")
     public ResponseEntity<UserDto> update(@RequestBody UserDto userDto) {
         UserDto res = userService.save(userDto);
+        return ResponseEntity.ok(res);
+    }
+
+    @PutMapping("/user/update-avatar/{id}")
+    public ResponseEntity<UserDto> updateAvatar(@PathVariable Long id,
+                                          @RequestBody ImageDto imageDto){
+        UserDto res = userService.changeAvatar(id,imageDto.getBytes(),imageDto.getType());
+        return ResponseEntity.ok(res);
+    }
+
+    @PutMapping("/user/update-password")
+    public ResponseEntity<UserDto> updatePassword(@RequestBody UserDto userDto){
+        UserDto res = userService.changePassword(userDto);
         return ResponseEntity.ok(res);
     }
 

@@ -1,9 +1,10 @@
 package com.commerce.service.impl;
+
 import com.commerce.common.constants.FolderConstants;
 import com.commerce.common.exception.ApiException;
 import com.commerce.common.constants.MessageConstants;
-import com.commerce.data.dto.MyUserDetails;
 import com.commerce.data.dto.UserDto;
+import com.commerce.data.dto.MyUserDetails;
 import com.commerce.data.entities.User;
 import com.commerce.data.repository.UserRepository;
 import com.commerce.service.MinioService;
@@ -21,10 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -32,7 +30,6 @@ import java.util.Random;
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
-
 
 
     private final UserRepository userRepository;
@@ -44,13 +41,13 @@ public class UserServiceImpl implements UserService {
     private final MinioService minioService;
 
     @Override
+    @Transactional
     public UserDto save(UserDto userDto) {
         User user = UserDto.toEntity(userDto);
-        if (user.getId() == null){
+        if (user.getId() == null) {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        }
-        else {
-            User old = userRepository.findById(user.getId()).get();
+        } else {
+            User old = userRepository.findById(user.getId()).orElseThrow(() -> ApiException.builder().httpStatus(HttpStatus.INTERNAL_SERVER_ERROR).message("Invalid user"));
             if (user.getAddress() == null)
                 user.setAddress(old.getAddress());
             if (user.getEmail() == null)
@@ -65,26 +62,36 @@ public class UserServiceImpl implements UserService {
                 user.setPassword(old.getPassword());
             if (user.getUsername() == null)
                 user.setUsername(old.getUsername());
-            // change password
-            String oldPassword = userDto.getOldPassword();
-            String newPassword = user.getPassword();
-            if (oldPassword != null && newPassword != null){
-                if (!bCryptPasswordEncoder.matches(oldPassword,old.getPassword()))
-                    throw ApiException.from(HttpStatus.INTERNAL_SERVER_ERROR).message(MessageConstants.OLD_PASSWORD_WRONG);
-                user.setPassword(bCryptPasswordEncoder.encode(newPassword));
-            }
-            // change avatar
-            byte[] data = userDto.getImage().getBytes();
-            if (data != null ){
-                String fileName = "avatar_user_"+user.getId() + "." + userDto.getImage().getType();
-                minioService.upload(FolderConstants.AVATAR_FOLDER,fileName,new ByteArrayInputStream(data));
-                user.setUrlImage(FolderConstants.AVATAR_FOLDER + fileName);
-            }
         }
         return UserDto.toDto(userRepository.save(user));
     }
 
     @Override
+    @Transactional
+    public UserDto changeAvatar(Long id, byte[] data, String type) {
+        User user = userRepository.findById(id).orElseThrow(() -> ApiException.builder().httpStatus(HttpStatus.INTERNAL_SERVER_ERROR).message("Invalid user"));
+        String fileName = "user_" + user.getId() + "_" + LocalDateTime.now() + "." + type;
+        minioService.upload(FolderConstants.AVATAR_FOLDER, fileName, new ByteArrayInputStream(data));
+        user.setUrlImage(FolderConstants.AVATAR_FOLDER + fileName);
+        return UserDto.toDto(userRepository.save(user));
+    }
+
+    @Override
+    @Transactional
+    public UserDto changePassword(UserDto userDto) {
+        User user = userRepository.findById(userDto.getId()).orElseThrow(() -> ApiException.builder().httpStatus(HttpStatus.INTERNAL_SERVER_ERROR).message("Invalid user"));
+        String oldPassword = userDto.getPassword();
+        String newPassword = userDto.getNewPassword();
+        if (oldPassword != null && newPassword != null) {
+            if (!bCryptPasswordEncoder.matches(oldPassword, user.getPassword()))
+                throw ApiException.builder().httpStatus(HttpStatus.INTERNAL_SERVER_ERROR).message(MessageConstants.OLD_PASSWORD_WRONG);
+            user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        }
+        return UserDto.toDto(userRepository.save(user));
+    }
+
+    @Override
+    @Transactional
     public String sendOtp(String email, String firstName, String lastName) {
         SimpleMailMessage message = new SimpleMailMessage();
         Random random = new Random();
@@ -119,11 +126,9 @@ public class UserServiceImpl implements UserService {
         if (user == null)
             throw new UsernameNotFoundException("Invalid user");
         List<GrantedAuthority> authorities = new ArrayList<>();
-        if (user.getRoles() != null){
-            user.getRoles().forEach(role -> {
-                authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getCode()));
-            });
+        if (user.getRoles() != null) {
+            user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getCode())));
         }
-        return new MyUserDetails(user.getUsername(),user.getPassword(),true,true,true,true, authorities, UserDto.toDto(user));
+        return new MyUserDetails(user.getUsername(), user.getPassword(), true, true, true, true, authorities, UserDto.toDto(user));
     }
 }

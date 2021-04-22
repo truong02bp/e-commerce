@@ -12,10 +12,13 @@ public class ApiException extends RuntimeException {
 
     private HttpStatus httpStatus;
 
-    public static ApiException from(HttpStatus status){
-        ApiException exception = new ApiException();
-        exception.httpStatus = status;
-        return exception;
+    public static ApiException builder(){
+        return new ApiException();
+    }
+
+    public ApiException httpStatus(HttpStatus status){
+        this.httpStatus = status;
+        return this;
     }
 
     public ApiException message(String message){

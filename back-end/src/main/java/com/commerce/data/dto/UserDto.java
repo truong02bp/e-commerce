@@ -14,15 +14,11 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class UserDto {
-
-    @Autowired
-    MinioService minioService;
-
     private Long id;
     private String email;
     private String username;
     private String password;
-    private String oldPassword;
+    private String newPassword;
     private String firstName;
     private String lastName;
     private String address;

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.List;
 
 @Entity
@@ -35,8 +36,11 @@ public class User extends BaseEntity {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "url_image")
-    private String urlImage;
+    @Column(name = "date_of_birth")
+    private Instant dateOfBirth;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    private Image image;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
