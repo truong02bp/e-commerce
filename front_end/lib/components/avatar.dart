@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:ecommerce/blocs/user_bloc.dart';
-import 'package:ecommerce/constants.dart';
+import 'package:ecommerce/constants/api_constant.dart';
 import 'package:ecommerce/events/user_event.dart';
 import 'package:ecommerce/state/user_state.dart';
 import 'package:flutter/material.dart';

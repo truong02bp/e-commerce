@@ -1,5 +1,5 @@
 import 'package:ecommerce/components/default_button.dart';
-import 'package:ecommerce/constants.dart';
+import 'package:ecommerce/constants/constants.dart';
 import 'package:ecommerce/screens/detail_product/detail_product_screen.dart';
 import 'package:ecommerce/screens/home/home_screen.dart';
 import 'package:ecommerce/screens/profile/profile_screen.dart';

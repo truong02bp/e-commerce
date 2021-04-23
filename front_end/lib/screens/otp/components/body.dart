@@ -1,5 +1,5 @@
 import 'package:ecommerce/components/custom_banner.dart';
-import 'package:ecommerce/constants.dart';
+import 'package:ecommerce/constants/constants.dart';
 import 'package:ecommerce/screens/otp/components/otp_form.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';

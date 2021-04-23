@@ -6,7 +6,7 @@ import 'package:ecommerce/components/form_error.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
+import '../../../constants/constants.dart';
 
 class Body extends StatefulWidget {
   @override

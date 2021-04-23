@@ -7,7 +7,7 @@ import 'package:ecommerce/screens/login_success/login_success.dart';
 import 'package:ecommerce/state/authentication_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ecommerce/constants.dart';
+import 'package:ecommerce/constants/constants.dart';
 import '../../../size_config.dart';
 import '../../../components/custom_suffix_icons.dart';
 

@@ -8,7 +8,7 @@ import 'package:ecommerce/size_config.dart';
 import 'package:ecommerce/state/sign_up_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../constants.dart';
+import '../../../constants/constants.dart';
 
 class SignUpForm extends StatefulWidget {
   @override

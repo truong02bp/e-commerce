@@ -1,7 +1,6 @@
 import 'package:ecommerce/blocs/user_bloc.dart';
-import 'package:ecommerce/constants.dart';
+import 'package:ecommerce/constants/constants.dart';
 import 'package:ecommerce/events/user_event.dart';
-import 'package:ecommerce/model/user.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:ecommerce/state/user_state.dart';
 import 'package:flutter/material.dart';

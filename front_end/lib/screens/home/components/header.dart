@@ -1,7 +1,7 @@
 import 'package:ecommerce/components/icon_btn_counter.dart';
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
+import '../../../constants/constants.dart';
 import '../../../size_config.dart';
 
 class Header extends StatelessWidget {

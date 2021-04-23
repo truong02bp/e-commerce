@@ -1,6 +1,6 @@
 import 'package:ecommerce/blocs/sign_up_bloc.dart';
 import 'package:ecommerce/components/default_button.dart';
-import 'package:ecommerce/constants.dart';
+import 'package:ecommerce/constants/constants.dart';
 import 'package:ecommerce/events/sign_up_event.dart';
 import 'package:ecommerce/screens/login_success/login_success.dart';
 import 'package:ecommerce/screens/sign_in/sign_in.dart';

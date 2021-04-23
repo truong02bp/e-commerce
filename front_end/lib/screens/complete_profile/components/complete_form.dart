@@ -1,7 +1,7 @@
 import 'package:ecommerce/blocs/sign_up_bloc.dart';
 import 'package:ecommerce/components/custom_suffix_icons.dart';
 import 'package:ecommerce/components/default_button.dart';
-import 'package:ecommerce/constants.dart';
+import 'package:ecommerce/constants/constants.dart';
 import 'package:ecommerce/events/sign_up_event.dart';
 import 'package:ecommerce/screens/otp/otp.dart';
 import 'package:ecommerce/screens/sign_up/sign_up.dart';

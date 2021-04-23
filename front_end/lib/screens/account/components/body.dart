@@ -1,8 +1,7 @@
 import 'package:ecommerce/blocs/user_bloc.dart';
-import 'package:ecommerce/constants.dart';
+import 'package:ecommerce/constants/constants.dart';
 import 'package:ecommerce/events/user_event.dart';
 import 'package:ecommerce/model/user.dart';
-import 'package:ecommerce/screens/account/account_screen.dart';
 import 'package:ecommerce/screens/change_password/change_password_screen.dart';
 import 'package:ecommerce/components/avatar.dart';
 import 'package:ecommerce/size_config.dart';

@@ -1,11 +1,14 @@
 import 'package:ecommerce/events/sign_up_event.dart';
 import 'package:ecommerce/model/user.dart';
+import 'package:ecommerce/service/register_service.dart';
 import 'package:ecommerce/state/sign_up_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ecommerce/service/user_service.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   SignUpBloc() : super(SignUpState());
+
+  RegisterService registerService = RegisterService();
 
   UserService userService = UserService();
 
@@ -18,9 +21,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     if (event is CompleteStepOneEvent) {
       yield SignUpLoading();
       bool isEmailExisted =
-          await userService.isEmailExisted(email: event.email);
+          await registerService.isEmailExisted(email: event.email);
       bool isUsernameExisted =
-          await userService.isUsernameExisted(username: event.username);
+          await registerService.isUsernameExisted(username: event.username);
       String message = "";
       if (isEmailExisted) {
         message = "Email is existed";
@@ -43,17 +46,17 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         user.firstName = event.firstName;
         user.phone = event.phoneNumber;
         user.address = event.address;
-        otp = await userService.sendOtp(email: user.email, firstName: user.firstName, lastName: user.lastName);
+        otp = await registerService.sendOtp(email: user.email, firstName: user.firstName, lastName: user.lastName);
         yield SignUpStepSecondStateSuccess();
       }
       else
         if (event is SubmitOtpEvent){
-          // if (otp == event.otp){
+          if (otp == event.otp){
             userService.create(user);
             yield SignUpOtpSuccess();
-          // }
-          // else
-          //   yield SignUpOtpFailure();
+          }
+          else
+            yield SignUpOtpFailure();
         }
   }
 }
