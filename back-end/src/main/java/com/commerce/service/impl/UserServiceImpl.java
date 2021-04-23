@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id).orElseThrow(() -> ApiException.builder().httpStatus(HttpStatus.INTERNAL_SERVER_ERROR).message("Invalid user"));
         String fileName = "user_" + user.getId() + "_" + LocalDateTime.now() + "." + type;
         minioService.upload(FolderConstants.AVATAR_FOLDER, fileName, new ByteArrayInputStream(data));
-        user.setUrlImage(FolderConstants.AVATAR_FOLDER + fileName);
+        user.getImage().setUrl(FolderConstants.AVATAR_FOLDER + fileName);
         return UserDto.toDto(userRepository.save(user));
     }
 

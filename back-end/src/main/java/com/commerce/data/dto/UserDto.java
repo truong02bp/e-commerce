@@ -52,7 +52,7 @@ public class UserDto {
         dto.setPhone(user.getPhone());
         dto.setPhone(user.getPhone());
         dto.setRoles(user.getRoles());
-        dto.setUrlImage(user.getUrlImage());
+        dto.setUrlImage(user.getImage().getUrl());
         return dto;
     }
 
