@@ -36,8 +36,6 @@ public class UserServiceImpl implements UserService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    private final JavaMailSender javaMailSender;
-
     private final MinioService minioService;
 
     @Override
@@ -90,33 +88,7 @@ public class UserServiceImpl implements UserService {
         return UserDto.toDto(userRepository.save(user));
     }
 
-    @Override
-    @Transactional
-    public String sendOtp(String email, String firstName, String lastName) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        Random random = new Random();
-        String otp = String.valueOf(random.nextInt(8999) + 1000);
-        message.setFrom("contact_e-commerce@gmail.com");
-        message.setTo(email);
-        String fullName = firstName + " " + lastName;
-        message.setSubject(fullName + " has notification");
-        String content = "Hi " + fullName + "\n" + "Your otp code is : " + otp;
-        message.setText(content);
-        javaMailSender.send(message);
-        return otp;
-    }
 
-    @Override
-    public boolean isEmailExisted(String email) {
-        User user = userRepository.findByEmail(email);
-        return !(user == null);
-    }
-
-    @Override
-    public boolean isUsernameExisted(String username) {
-        User user = userRepository.findByUsername(username);
-        return !(user == null);
-    }
 
 
     @Override

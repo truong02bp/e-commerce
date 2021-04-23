@@ -52,23 +52,4 @@ public class UserController {
         return ResponseEntity.ok(res);
     }
 
-    @PostMapping("/user/otp")
-    public ResponseEntity<String> sendOtp(@RequestParam("email") String email,
-                                          @RequestParam("firstName") String firstName,
-                                          @RequestParam("lastName") String lastName) {
-        String otp = userService.sendOtp(email,firstName,lastName);
-        return ResponseEntity.ok(otp);
-    }
-
-    @PostMapping("/user/check-email")
-    public ResponseEntity<Boolean> checkEmailExisted(@RequestParam("email") String email){
-        Boolean res = userService.isEmailExisted(email);
-        return ResponseEntity.ok(res);
-    }
-
-    @PostMapping("/user/check-username")
-    public ResponseEntity<Boolean> checkUsernameExisted(@RequestParam("username") String username){
-        Boolean res = userService.isUsernameExisted(username);
-        return ResponseEntity.ok(res);
-    }
 }
