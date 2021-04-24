@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -24,11 +26,8 @@ public class User extends BaseEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "first_name")
-    private String firstName;
-
-    @Column(name = "last_name")
-    private String lastName;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "address", columnDefinition = "text")
     private String address;
@@ -37,7 +36,7 @@ public class User extends BaseEntity {
     private String phone;
 
     @Column(name = "date_of_birth")
-    private Instant dateOfBirth;
+    private Date dateOfBirth;
 
     @OneToOne(fetch = FetchType.EAGER)
     private Image image;

@@ -2,7 +2,7 @@ package com.commerce.service;
 
 public interface RegisterService {
 
-    String sendOtp(String email, String firstName, String lastName);
+    String sendOtp(String email, String name);
 
     boolean isEmailExisted(String email);
 

@@ -1,18 +1,18 @@
 package com.commerce.service.impl;
 
 import com.commerce.common.constants.FolderConstants;
-import com.commerce.common.exception.ApiException;
 import com.commerce.common.constants.MessageConstants;
-import com.commerce.data.dto.UserDto;
+import com.commerce.common.exception.ApiException;
 import com.commerce.data.dto.MyUserDetails;
+import com.commerce.data.dto.UserDto;
+import com.commerce.data.entities.Image;
 import com.commerce.data.entities.User;
+import com.commerce.data.repository.ImageRepository;
 import com.commerce.data.repository.UserRepository;
 import com.commerce.service.MinioService;
 import com.commerce.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +25,6 @@ import java.io.ByteArrayInputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @Service
 @AllArgsConstructor
@@ -38,28 +37,18 @@ public class UserServiceImpl implements UserService {
 
     private final MinioService minioService;
 
+    private final ImageRepository imageRepository;
+
     @Override
     @Transactional
     public UserDto save(UserDto userDto) {
-        User user = UserDto.toEntity(userDto);
-        if (user.getId() == null) {
+        User user;
+        if (userDto.getId() == null) {
+            user = UserDto.toEntity(userDto);
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         } else {
-            User old = userRepository.findById(user.getId()).orElseThrow(() -> ApiException.builder().httpStatus(HttpStatus.INTERNAL_SERVER_ERROR).message("Invalid user"));
-            if (user.getAddress() == null)
-                user.setAddress(old.getAddress());
-            if (user.getEmail() == null)
-                user.setEmail(old.getEmail());
-            if (user.getPhone() == null)
-                user.setPhone(old.getPhone());
-            if (user.getFirstName() == null)
-                user.setFirstName(old.getFirstName());
-            if (user.getLastName() == null)
-                user.setLastName(old.getLastName());
-            if (user.getPassword() == null)
-                user.setPassword(old.getPassword());
-            if (user.getUsername() == null)
-                user.setUsername(old.getUsername());
+            user = userRepository.findById(userDto.getId()).orElseThrow(() -> ApiException.builder().httpStatus(HttpStatus.INTERNAL_SERVER_ERROR).message("Invalid user"));
+            mapData(userDto, user);
         }
         return UserDto.toDto(userRepository.save(user));
     }
@@ -70,6 +59,11 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id).orElseThrow(() -> ApiException.builder().httpStatus(HttpStatus.INTERNAL_SERVER_ERROR).message("Invalid user"));
         String fileName = "user_" + user.getId() + "_" + LocalDateTime.now() + "." + type;
         minioService.upload(FolderConstants.AVATAR_FOLDER, fileName, new ByteArrayInputStream(data));
+        if (user.getImage() == null) {
+            Image image = new Image();
+            image = imageRepository.save(image);
+            user.setImage(image);
+        }
         user.getImage().setUrl(FolderConstants.AVATAR_FOLDER + fileName);
         return UserDto.toDto(userRepository.save(user));
     }
@@ -102,5 +96,22 @@ public class UserServiceImpl implements UserService {
             user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getCode())));
         }
         return new MyUserDetails(user.getUsername(), user.getPassword(), true, true, true, true, authorities, UserDto.toDto(user));
+    }
+
+    private void mapData(UserDto userDto , User user){
+        if (userDto.getAddress() != null)
+            user.setAddress(userDto.getAddress());
+        if (userDto.getEmail() != null)
+            user.setEmail(userDto.getEmail());
+        if (userDto.getPhone() != null)
+            user.setPhone(userDto.getPhone());
+        if (userDto.getName() != null)
+            user.setName(userDto.getName());
+        if (userDto.getPassword() != null)
+            user.setPassword(userDto.getPassword());
+        if (userDto.getUsername() != null)
+            user.setUsername(userDto.getUsername());
+        if (userDto.getDateOfBirth() != null)
+            user.setDateOfBirth(userDto.getDateOfBirth());
     }
 }

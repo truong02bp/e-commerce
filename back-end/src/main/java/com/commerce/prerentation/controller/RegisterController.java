@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class RegisterController {
 
-    private RegisterService registerService;
+    private final RegisterService registerService;
 
     @PostMapping("/register/otp")
     public ResponseEntity<String> sendOtp(@RequestParam("email") String email,
-                                          @RequestParam("firstName") String firstName,
-                                          @RequestParam("lastName") String lastName) {
-        String otp = registerService.sendOtp(email,firstName,lastName);
+                                          @RequestParam("name") String name) {
+        String otp = registerService.sendOtp(email,name);
         return ResponseEntity.ok(otp);
     }
 

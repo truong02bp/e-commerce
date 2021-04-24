@@ -2,12 +2,15 @@ package com.commerce.data.dto;
 
 import com.commerce.data.entities.Role;
 import com.commerce.data.entities.User;
-import com.commerce.service.MinioService;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -19,12 +22,11 @@ public class UserDto {
     private String username;
     private String password;
     private String newPassword;
-    private String firstName;
-    private String lastName;
+    private String name;
     private String address;
     private String phone;
-    private ImageDto image;
     private String urlImage;
+    private Date dateOfBirth;
     private List<Role> roles;
 
     public static User toEntity(UserDto dto) {
@@ -32,12 +34,12 @@ public class UserDto {
         entity.setId(dto.getId());
         entity.setAddress(dto.getAddress());
         entity.setEmail(dto.getEmail());
-        entity.setFirstName(dto.getFirstName());
-        entity.setLastName(dto.getLastName());
+        entity.setName(dto.getName());
         entity.setPassword(dto.getPassword());
         entity.setUsername(dto.getUsername());
         entity.setPhone(dto.getPhone());
         entity.setRoles(dto.getRoles());
+        entity.setDateOfBirth(dto.getDateOfBirth());
         return entity;
     }
 
@@ -46,14 +48,16 @@ public class UserDto {
         dto.setId(user.getId());
         dto.setAddress(user.getAddress());
         dto.setEmail(user.getEmail());
-        dto.setFirstName(user.getFirstName());
-        dto.setLastName(user.getLastName());
+        dto.setName(user.getName());
         dto.setUsername(user.getUsername());
         dto.setPhone(user.getPhone());
         dto.setPhone(user.getPhone());
         dto.setRoles(user.getRoles());
-        dto.setUrlImage(user.getImage().getUrl());
+        dto.setDateOfBirth(user.getDateOfBirth());
+        if (user.getImage() != null)
+            dto.setUrlImage(user.getImage().getUrl());
         return dto;
     }
+
 
 }
