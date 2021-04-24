@@ -20,7 +20,8 @@ class UserService {
       final res = await http.post(apiUrl,
           body: jsonEncode(user), headers: headers);
       
-      if (res.statusCode != 200) throw new Exception(res.statusCode.toString());
+      if (res.statusCode != 201) 
+      throw Exception(res.statusCode.toString());
     } catch (exception) {
       throw Exception(exception.toString());
     }

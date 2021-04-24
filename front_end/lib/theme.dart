@@ -45,6 +45,7 @@ InputDecorationTheme inputTheme(){
     contentPadding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
     enabledBorder: outlineInputBorder,
     focusedBorder: outlineInputBorder,
-    border: InputBorder.none,
+    errorBorder: outlineInputBorder,
+    border: outlineInputBorder,
   );
 }

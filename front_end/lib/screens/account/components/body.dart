@@ -20,9 +20,7 @@ class _BodyState extends State<Body> {
 
   UserBloc _userBloc;
 
-  String firstName;
-
-  String lastName;
+  String name;
 
   String phone;
 
@@ -70,7 +68,7 @@ class _BodyState extends State<Body> {
             height: getProportionateHeight(15),
           ),
           Text(
-            '${user.firstName} ${user.lastName}',
+            '${user.name}',
             style: TextStyle(
                 fontSize: getProportionateWidth(25),
                 color: Colors.black.withOpacity(0.7)),
@@ -83,22 +81,22 @@ class _BodyState extends State<Body> {
           InputCard(
             onChange: (value) {
               setState(() {
-                firstName = value;
+                name = value;
               });
             },
             readOnly: false,
-            initialValue: user.firstName,
-            prefixText: "First Name",
+            initialValue: user.name,
+            prefixText: "Name",
           ),
           InputCard(
             onChange: (value) {
               setState(() {
-                lastName = value;
+
               });
             },
             readOnly: false,
-            initialValue: user.lastName,
-            prefixText: "Last Name",
+            initialValue: user.dateOfBirth,
+            prefixText: "Date of birth",
           ),
           InputCard(
             onChange: (value) {
@@ -166,9 +164,9 @@ class _BodyState extends State<Body> {
     User updateUser = User(
         id: user.id,
         phone: phone,
-        firstName: firstName,
+        dateOfBirth: null,
         address: address,
-        lastName: lastName);
+        name: name);
     _userBloc.add(UserEventUpdate(user: updateUser));
   }
 

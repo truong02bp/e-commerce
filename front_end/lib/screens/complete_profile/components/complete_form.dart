@@ -4,12 +4,11 @@ import 'package:ecommerce/components/default_button.dart';
 import 'package:ecommerce/constants/constants.dart';
 import 'package:ecommerce/events/sign_up_event.dart';
 import 'package:ecommerce/screens/otp/otp.dart';
-import 'package:ecommerce/screens/sign_up/sign_up.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:ecommerce/state/sign_up_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:intl/intl.dart';
 class CompleteForm extends StatefulWidget {
   @override
   _CompleteFormState createState() => _CompleteFormState();
@@ -20,8 +19,8 @@ class _CompleteFormState extends State<CompleteForm> {
 
   SignUpBloc _signUpBloc;
 
-  String _firstName;
-  String _lastName;
+  String _name;
+  DateTime _dateOfBirth;
   String _phoneNumber;
   String _address;
 
@@ -57,11 +56,11 @@ class _CompleteFormState extends State<CompleteForm> {
             padding: const EdgeInsets.all(25),
             child: Column(
               children: [
-                buildFirstNameField(),
+                buildNameField(),
                 SizedBox(
                   height: getProportionateHeight(25),
                 ),
-                buildLastNameField(),
+                buildDateOfBirthField(),
                 SizedBox(
                   height: getProportionateHeight(25),
                 ),
@@ -71,35 +70,38 @@ class _CompleteFormState extends State<CompleteForm> {
                 ),
                 buildAddressField(),
                 SizedBox(
-                  height: getProportionateHeight(25),
+                  height: getProportionateHeight(10),
+                ),
+                buildLoading(isLoading: isLoading),
+                SizedBox(
+                  height: getProportionateHeight(15),
                 ),
                 DefaultButton(
                     text: 'Continue',
                     press: () {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
-                        _signUpBloc.add(CompleteStepSecondEvent(firstName: _firstName, lastName: _lastName, phoneNumber: _phoneNumber, address: _address));
+                        _signUpBloc.add(CompleteStepSecondEvent(dateOfBirth: _dateOfBirth, name: _name, phoneNumber: _phoneNumber, address: _address));
                       }
                     }),
-                buildLoading(isLoading: isLoading)
               ],
             ),
           )),
     );
   }
 
-  TextFormField buildFirstNameField() {
+  TextFormField buildNameField() {
     return TextFormField(
       onChanged: (value) {
-        _firstName = value;
+        _name = value;
       },
       validator: (value) {
-        if (value.isEmpty) return "First name must not empty";
+        if (value.isEmpty) return "Name must not empty";
         return null;
       },
       decoration: InputDecoration(
-          labelText: 'First name',
-          hintText: 'Enter your first name',
+          labelText: 'Name',
+          hintText: 'Enter your name',
           floatingLabelBehavior: FloatingLabelBehavior.always,
           suffixIcon: CustomSuffixIcon(
             image: "assets/icons/User.svg",
@@ -107,18 +109,17 @@ class _CompleteFormState extends State<CompleteForm> {
     );
   }
 
-  TextFormField buildLastNameField() {
+  TextFormField buildDateOfBirthField() {
     return TextFormField(
-      onChanged: (value) {
-        _lastName = value;
-      },
-      validator: (value) {
-        if (value.isEmpty) return "Last name must not empty";
-        return null;
+      onTap: (){
+        showDatePicker(context: context, initialDate: DateTime(2022), firstDate: DateTime(1900), lastDate: DateTime(2022))
+        .then((value) => setState((){
+          _dateOfBirth = value;
+        }));
       },
       decoration: InputDecoration(
-          labelText: 'Last name',
-          hintText: 'Enter your last name',
+          labelText: 'Date of birth',
+          hintText: _dateOfBirth == null ? 'Enter your date of birth' : DateFormat('dd/MM/yyyy').format(_dateOfBirth),
           floatingLabelBehavior: FloatingLabelBehavior.always,
           suffixIcon: CustomSuffixIcon(
             image: "assets/icons/User.svg",
@@ -131,6 +132,7 @@ class _CompleteFormState extends State<CompleteForm> {
       onChanged: (value) {
         _phoneNumber = value;
       },
+      keyboardType: TextInputType.number,
       validator: (value) {
         if (value.isEmpty) return "Phone number must not empty";
         return null;

@@ -6,21 +6,20 @@ class User {
   int id;
   String username;
   String password;
-  String firstName;
-  String lastName;
+  String name;
   String phone;
   String email;
   String address;
   String urlImage;
+  String dateOfBirth;
   String newPassword;
   User(
       {this.id,
       this.username,
       this.password,
-      this.firstName,
-      this.lastName,
+      this.name,
       this.phone,
-      this.email, this.address, this.urlImage, this.newPassword});
+      this.email, this.address, this.urlImage, this.newPassword, this.dateOfBirth});
   factory User.fromJson(Map<String,dynamic> jsonMap) => _$UserFromJson(jsonMap);
   Map<String,dynamic> toJson() => _$UserToJson(this);
 }

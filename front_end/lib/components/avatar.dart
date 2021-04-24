@@ -51,9 +51,7 @@ class _AvatarState extends State<Avatar> {
               overflow: Overflow.visible,
               children: [
                 CircleAvatar(
-                  backgroundImage: _image == null
-                      ? NetworkImage("$minioUrl$imageUrl")
-                      : FileImage(File(_image.path)),
+                  backgroundImage: buildImage(),
                 ),
                 Positioned(
                   right: -10,
@@ -80,6 +78,14 @@ class _AvatarState extends State<Avatar> {
         ),
       ),
     );
+  }
+
+  ImageProvider buildImage(){
+    if (imageUrl == null)
+      return AssetImage("assets/images/anonymous.jpeg");
+    if (_image == null) 
+        return NetworkImage("$minioUrl$imageUrl");
+    return FileImage(File(_image.path));
   }
 
   Widget bottomSheet() {

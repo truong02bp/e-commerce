@@ -7,15 +7,13 @@ class RegisterService {
   String apiUrl = baseUrl + "/register";
 
   Future<String> sendOtp(
-      {String email, String firstName, String lastName}) async {
+      {String email, String name}) async {
     try {
       final res = await http.post(apiUrl +"/otp?" +
           "email=" +
           email +
-          "&firstName=" +
-          firstName +
-          "&lastName=" +
-          lastName);
+          "&name=" +
+          name);
       if (res.statusCode == 200) {
         return res.body;
       } else

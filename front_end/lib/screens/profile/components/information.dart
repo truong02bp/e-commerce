@@ -45,7 +45,7 @@ class _InformationState extends State<Information> {
         SizedBox(
           height: getProportionateHeight(15),
         ),
-        Text('${user.firstName} ${user.lastName}', style: TextStyle(fontSize: getProportionateWidth(20)),)
+        Text('${user.name}', style: TextStyle(fontSize: getProportionateWidth(20)),)
       ],);
     }
     return Image.asset("assets/images/loading.gif", height: 100, width: 100,);

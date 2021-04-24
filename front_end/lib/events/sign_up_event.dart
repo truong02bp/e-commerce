@@ -17,13 +17,13 @@ class CompleteStepOneEvent extends SignUpEvent {
 
 class CompleteStepSecondEvent extends SignUpEvent {
 
-  final String firstName;
-  final String lastName;
+  final String name;
+  final DateTime dateOfBirth;
   final String phoneNumber;
   final String address;
 
   CompleteStepSecondEvent(
-      {this.firstName, this.lastName, this.phoneNumber, this.address});
+      {this.dateOfBirth,this.name, this.phoneNumber, this.address});
 }
 
 class SubmitOtpEvent extends SignUpEvent {

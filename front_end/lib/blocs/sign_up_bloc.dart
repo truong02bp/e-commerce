@@ -4,7 +4,7 @@ import 'package:ecommerce/service/register_service.dart';
 import 'package:ecommerce/state/sign_up_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ecommerce/service/user_service.dart';
-
+import 'package:intl/intl.dart';
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   SignUpBloc() : super(SignUpState());
 
@@ -42,11 +42,12 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     }
     else
       if (event is CompleteStepSecondEvent){
-        user.lastName = event.lastName;
-        user.firstName = event.firstName;
+        yield SignUpLoading();
+        user.name = event.name;
         user.phone = event.phoneNumber;
         user.address = event.address;
-        otp = await registerService.sendOtp(email: user.email, firstName: user.firstName, lastName: user.lastName);
+        user.dateOfBirth = DateFormat('yyyy-MM-dd').format(event.dateOfBirth);
+        otp = await registerService.sendOtp(email: user.email, name: user.name);
         yield SignUpStepSecondStateSuccess();
       }
       else
