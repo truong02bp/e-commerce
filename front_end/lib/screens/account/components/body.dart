@@ -9,6 +9,7 @@ import 'package:ecommerce/state/user_state.dart';
 import 'package:flutter/material.dart';
 import 'input_card.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -21,6 +22,8 @@ class _BodyState extends State<Body> {
   UserBloc _userBloc;
 
   String name;
+
+  DateTime _dateOfBirth;
 
   String phone;
 
@@ -47,7 +50,7 @@ class _BodyState extends State<Body> {
             setState(() {
               user = state.user;
               isUpdateSuccess = true;
-              showUpdateMessage(context,isUpdateSuccess);
+              showUpdateMessage(context, isUpdateSuccess);
             });
           }
         },
@@ -88,16 +91,7 @@ class _BodyState extends State<Body> {
             initialValue: user.name,
             prefixText: "Name",
           ),
-          InputCard(
-            onChange: (value) {
-              setState(() {
-
-              });
-            },
-            readOnly: false,
-            initialValue: user.dateOfBirth,
-            prefixText: "Date of birth",
-          ),
+          buildDateOfBirthField(),
           InputCard(
             onChange: (value) {
               setState(() {
@@ -164,13 +158,47 @@ class _BodyState extends State<Body> {
     User updateUser = User(
         id: user.id,
         phone: phone,
-        dateOfBirth: null,
+        dateOfBirth: DateFormat('yyyy-MM-dd').format(_dateOfBirth),
         address: address,
         name: name);
     _userBloc.add(UserEventUpdate(user: updateUser));
   }
 
-  
+  Stack buildDateOfBirthField() {
+    return Stack(children: [
+      Positioned(child: Text('Date of birth', textAlign: TextAlign.left,style: TextStyle(color: Colors.black.withOpacity(0.45),)), bottom: 20, left: 40,),
+      TextFormField(
+        onTap: () {
+          showDatePicker(
+                  context: context,
+                  initialDate: DateTime(2022),
+                  firstDate: DateTime(1900),
+                  lastDate: DateTime(2022))
+              .then((value) => setState(() {
+                    _dateOfBirth = value;
+                  }));
+        },
+        decoration: InputDecoration(
+          focusedBorder:
+              UnderlineInputBorder(borderRadius: BorderRadius.circular(25)),
+          enabledBorder:
+              UnderlineInputBorder(borderRadius: BorderRadius.circular(25)),
+          errorBorder:
+              UnderlineInputBorder(borderRadius: BorderRadius.circular(25)),
+          disabledBorder:
+              UnderlineInputBorder(borderRadius: BorderRadius.circular(25)),
+          hintText: _dateOfBirth == null
+              ? DateFormat('dd-MM-yyyy')
+                  .format(DateTime.parse(user.dateOfBirth))
+              : DateFormat('dd/MM/yyyy').format(_dateOfBirth),
+          prefixStyle: TextStyle(
+            color: Colors.black.withOpacity(0.45),
+          ),
+        ),
+        textAlign: TextAlign.end,
+      ),
+    ]);
+  }
 
   TextFormField buildPhoneNumber() {
     return TextFormField(
