@@ -19,7 +19,7 @@ class AuthenticationService {
         body: AuthenticationRequest(username: username, password: password),
         headers: headers,
         url: baseUrl + "/authenticate");    
-    String token = await apiService.post(apiModel);
+    String token = await apiService.postWithoutToken(apiModel);
     if (token != null) {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       preferences.setString("token",token);
