@@ -1,5 +1,6 @@
 
 import 'package:ecommerce/screens/account/account_screen.dart';
+import 'package:ecommerce/screens/cart/cart_screen.dart';
 import 'package:ecommerce/screens/change_password/change_password_screen.dart';
 import 'package:ecommerce/screens/complete_profile/complete_profile.dart';
 import 'package:ecommerce/screens/detail_product/detail_product_screen.dart';
@@ -25,5 +26,6 @@ final Map<String,WidgetBuilder> routes = {
   DetailProductScreen.routeName : (context) => DetailProductScreen(),
   ProfileScreen.routeName : (context) => ProfileScreen(),
   AccountScreen.routeName : (context) => AccountScreen(),
-  ChangePasswordScreen.routeName : (context) => ChangePasswordScreen()
+  ChangePasswordScreen.routeName : (context) => ChangePasswordScreen(),
+  CartScreen.routeName : (context) => CartScreen(),
 };
