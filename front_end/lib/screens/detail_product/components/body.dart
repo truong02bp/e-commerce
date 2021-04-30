@@ -1,8 +1,8 @@
 import 'package:ecommerce/constants/constants.dart';
 import 'package:ecommerce/model/product.dart';
+import 'package:ecommerce/screens/detail_product/components/product_images.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 
 class Body extends StatefulWidget {
   final Product product;
@@ -14,43 +14,60 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  CarouselController buttonCarouselController = CarouselController();
-  int selectedIndex = 0;
-
   @override
   Widget build(BuildContext context) {
-    final images = widget.product.images;
+    final product = widget.product;
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CarouselSlider(
-            items: List.generate(images.length,
-                (index) => Image.asset(widget.product.images[index])),
-            carouselController: buttonCarouselController,
-            options: CarouselOptions(
-              height: getProportionateHeight(350),
-              autoPlay: false,
-              enlargeCenterPage: true,
-              viewportFraction: 0.9,
-              aspectRatio: 2.0,
-              initialPage: 0,
-              onPageChanged: (index, reason) => {
-                setState(() {
-                  selectedIndex = index;
-                })
-              },
-            ),
+          ProductImages(
+            images: product.images,
           ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                  images.length,
-                  (index) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: buildSmallProductPreview(index),
-                      )),
+          Padding(
+            padding: const EdgeInsets.only(top: 5, left: 15, right: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${product.title}',
+                  style: TextStyle(fontSize: 20, color: Colors.black),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text('\$${product.price}',
+                    style: TextStyle(fontSize: 20, color: Colors.orange)),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    Row(
+                      children: List.generate(product.rating.toInt() + 1,
+                          (index) => buildStart(index: index)),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      '${product.rating}',
+                      style: TextStyle(fontSize: 18, color: Colors.black),
+                    ),
+                    SizedBox(
+                      width: getProportionateWidth(20),
+                    ),
+                    Text(
+                      'Selled : 3',
+                      style: TextStyle(fontSize: 18, color: Colors.black),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text('${product.description}')
+              ],
             ),
           )
         ],
@@ -58,28 +75,22 @@ class _BodyState extends State<Body> {
     );
   }
 
-  GestureDetector buildSmallProductPreview(int index) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedIndex = index;
-          buttonCarouselController.jumpToPage(index);
-        });
-      },
-      child: AnimatedContainer(
-        duration: Duration(seconds: 0),
-        margin: EdgeInsets.only(right: 15),
-        padding: EdgeInsets.all(8),
-        height: getProportionateHeight(50),
-        width: getProportionateWidth(50),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-              color: kPrimaryColor.withOpacity(selectedIndex == index ? 1 : 0)),
-        ),
-        child: Image.asset(widget.product.images[index]),
-      ),
+  Widget buildStart({int index}) {
+    final rating = widget.product.rating;
+    if (index >= rating) {
+      return Icon(
+        Icons.star_border,
+        color: Theme.of(context).buttonColor,
+      );
+    }
+    if (index > rating - 1 && index < rating)
+      return Icon(
+        Icons.star_half,
+        color: kPrimaryColor,
+      );
+    return Icon(
+      Icons.star,
+      color: kPrimaryColor,
     );
   }
 }
