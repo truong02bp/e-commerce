@@ -1,3 +1,5 @@
+import 'package:ecommerce/components/bell.dart';
+import 'package:ecommerce/components/cart.dart';
 import 'package:ecommerce/components/icon_btn_counter.dart';
 import 'package:flutter/material.dart';
 
@@ -5,6 +7,7 @@ import '../../../constants/constants.dart';
 import '../../../size_config.dart';
 
 class Header extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -33,16 +36,8 @@ class Header extends StatelessWidget {
                       vertical: getProportionateWidth(10))),
             ),
           ),
-          IconBtnWithCounter(
-            icon: "assets/icons/Cart Icon.svg",
-            counter: 3,
-            onPress: () {},
-          ),
-          IconBtnWithCounter(
-            icon: "assets/icons/Bell.svg",
-            counter: 3,
-            onPress: () {},
-          )
+          Cart(counter: 3,),
+          Bell(counter: 3,),
         ],
       ),
     );
