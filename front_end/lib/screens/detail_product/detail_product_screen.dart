@@ -1,6 +1,7 @@
-import 'package:ecommerce/components/bell.dart';
-import 'package:ecommerce/components/cart.dart';
+
 import 'package:ecommerce/model/product.dart';
+import 'package:ecommerce/screens/detail_product/components/custom_appbar.dart';
+import 'package:ecommerce/screens/detail_product/components/custom_bottom_appbar.dart';
 import 'package:flutter/material.dart';
 
 import 'components/body.dart';
@@ -10,9 +11,12 @@ class DetailProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DetailProductArguments arguments = ModalRoute.of(context).settings.arguments;
+    // final DetailProductArguments arguments = ModalRoute.of(context).settings.arguments;
     return Scaffold(
-      body: SafeArea(child: Body(product: arguments.product,))
+      backgroundColor: Color(0xFFF5F6F9),
+      appBar: AppbarCustom(),
+      body: Body(),
+      bottomNavigationBar: CustomBottomAppbar(),
     );
   }
 }

@@ -18,19 +18,7 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          children: [
-            Spacer(),
-            Icon(Icons.arrow_back_ios),
-            Spacer(flex: 12,),
-            Cart(
-              counter: 3,
-            ),
-            Spacer(),
-            Bell(counter: 3),
-            Spacer()
-          ],
-        )
+        
       ],
     );
   }
