@@ -13,7 +13,7 @@ class SplashContent extends StatelessWidget {
     return Column(
       children: [
         Spacer(),
-        CustomBanner(text: 'ToKoTo'),
+        CustomBanner(text: 'Shoppe'),
         Text(text, textAlign: TextAlign.center,),
         Spacer(flex: 2,),
         Image.asset(

@@ -1,12 +1,7 @@
 import 'package:ecommerce/components/default_button.dart';
 import 'package:ecommerce/constants/constants.dart';
-import 'package:ecommerce/screens/cart/cart_screen.dart';
-import 'package:ecommerce/screens/detail_product/detail_product_screen.dart';
-import 'package:ecommerce/screens/home/home_screen.dart';
-import 'package:ecommerce/screens/profile/profile_screen.dart';
-import 'package:ecommerce/screens/sign_in/sign_in.dart';
+import 'package:ecommerce/screens/admin/manager/manager_screen.dart';
 import 'package:ecommerce/screens/splash/components/splash_content.dart';
-import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
 
 class Body extends StatefulWidget {
@@ -18,11 +13,11 @@ class _BodyState extends State<Body> {
 
   List<Map<String,String>> values = [
     {
-      "text" : 'Welcome to ToKoTo, Let\'s shop!',
+      "text" : 'Welcome to Shoppe, Let\'s shop!',
       "image" : 'assets/images/splash_1.png'
     },
     {
-      "text": 'We help people contact with store\naround United State Of America',
+      "text": 'We help people buy everything, every where',
       "image": 'assets/images/splash_2.png'
     },
     {
@@ -68,7 +63,7 @@ class _BodyState extends State<Body> {
                     DefaultButton(
                       text: 'Continute',
                       press: (){
-                        Navigator.pushNamed(context, DetailProductScreen.routeName);
+                        Navigator.pushNamed(context, ManagerScreen.routeName);
                       },
                     ),
                     Spacer()
