@@ -6,8 +6,8 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "item")
-public class Item extends BaseEntity {
+@Table(name = "product")
+public class Product extends BaseEntity {
 
     @Column(name = "description", columnDefinition = "text")
     private String description;
