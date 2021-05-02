@@ -17,9 +17,11 @@ public class ImageDto {
 
     private String type;
 
+    private String folder;
+
     public static Image toEntity(ImageDto imageDto){
         Image image = new Image();
-        image.setId(image.getId());
+        image.setId(imageDto.getId());
         image.setUrl(imageDto.getUrl());
         image.setName(imageDto.getName());
         image.setType(imageDto.getType());

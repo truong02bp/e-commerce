@@ -1,5 +1,6 @@
 package com.commerce.service;
 
+import com.commerce.data.dto.CategoryDto;
 import com.commerce.data.entities.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,9 +13,9 @@ public interface CategoryService {
 
     List<Category> findAll(Pageable pageable);
 
-    Category create(Category category);
+    Category create(CategoryDto categoryDto);
 
-    Category update(Category category);
+    Category update(CategoryDto categoryDto);
 
     void delete(Long id);
 }

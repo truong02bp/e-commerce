@@ -6,12 +6,9 @@ import com.commerce.common.exception.ApiException;
 import com.commerce.data.dto.ImageDto;
 import com.commerce.data.dto.MyUserDetails;
 import com.commerce.data.dto.UserDto;
-import com.commerce.data.entities.Image;
 import com.commerce.data.entities.User;
-import com.commerce.data.repository.ImageRepository;
 import com.commerce.data.repository.UserRepository;
 import com.commerce.service.ImageService;
-import com.commerce.service.MinioService;
 import com.commerce.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,7 +20,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.ByteArrayInputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +55,8 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id).orElseThrow(() -> ApiException.builder().httpStatus(HttpStatus.INTERNAL_SERVER_ERROR).message("Invalid user"));
         String fileName = "user_" + user.getId() + "_" + LocalDateTime.now() + "." + imageDto.getType();
         imageDto.setName(fileName);
-        if (user.getImage() != null){
+        imageDto.setFolder(FolderConstants.AVATAR_FOLDER);
+        if (user.getImage() == null){
             user.setImage(imageService.save(imageDto));
         }
         else

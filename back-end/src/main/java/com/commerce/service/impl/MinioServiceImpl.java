@@ -1,14 +1,17 @@
 package com.commerce.service.impl;
 
+import com.commerce.common.exception.ApiException;
 import com.commerce.service.MinioService;
 import io.minio.GetObjectArgs;
 import io.minio.MinioClient;
+import io.minio.RemoveObjectArgs;
 import io.minio.UploadObjectArgs;
 import io.minio.errors.*;
 import io.minio.messages.Bucket;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -73,5 +76,14 @@ public class MinioServiceImpl implements MinioService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public void delete(String url) {
+        try {
+            minioClient.removeObject(RemoveObjectArgs.builder().bucket(defaultBucket).object(url).build());
+        } catch (Exception e) {
+            throw ApiException.builder().httpStatus(HttpStatus.INTERNAL_SERVER_ERROR).message("Delete object fail");
+        }
     }
 }

@@ -15,5 +15,7 @@ public interface MinioService {
 
     void upload(String folder, String name, InputStream data);
 
+    void delete(String url);
+
     byte[] getBytes(String key);
 }

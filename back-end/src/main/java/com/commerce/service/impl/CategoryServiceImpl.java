@@ -1,9 +1,12 @@
 package com.commerce.service.impl;
 
+import com.commerce.common.constants.FolderConstants;
+import com.commerce.data.dto.CategoryDto;
 import com.commerce.data.entities.Category;
 import com.commerce.data.repository.CategoryRepository;
 import com.commerce.data.repository.ImageRepository;
 import com.commerce.service.CategoryService;
+import com.commerce.service.ImageService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,7 +19,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     final CategoryRepository categoryRepository;
 
-    final ImageRepository imageRepository;
+    final ImageService imageService;
 
     @Override
     public List<Category> findAll() {
@@ -29,14 +32,18 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category create(Category category) {
+    public Category create(CategoryDto categoryDto) {
+        Category category = CategoryDto.toEntity(categoryDto);
+        categoryDto.getImageDto().setFolder(FolderConstants.CATEGORY_FOLDER);
+        category.setImage(imageService.save(categoryDto.getImageDto()));
         return categoryRepository.save(category);
     }
 
     @Override
-    public Category update(Category category) {
-        return categoryRepository.save(category);
+    public Category update(CategoryDto categoryDto) {
+        return null;
     }
+
 
     @Override
     public void delete(Long id) {

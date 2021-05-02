@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
+import java.time.LocalDateTime;
 
 @Service
 @AllArgsConstructor
@@ -23,21 +24,32 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public Image save(ImageDto imageDto) {
-        minioService.upload(FolderConstants.AVATAR_FOLDER, imageDto.getName(), new ByteArrayInputStream(imageDto.getBytes()));
-        imageDto.setUrl(FolderConstants.AVATAR_FOLDER + imageDto.getName());
+        if (imageDto.getName() == null){
+            imageDto.setName(LocalDateTime.now().toString());
+        }
+        if (imageDto.getFolder() == null)
+            imageDto.setFolder(FolderConstants.DEFAULT_FOLDER);
+        minioService.upload(imageDto.getFolder(), imageDto.getName(), new ByteArrayInputStream(imageDto.getBytes()));
+        imageDto.setUrl(imageDto.getFolder() + imageDto.getName());
         return imageRepository.save(ImageDto.toEntity(imageDto));
     }
 
     @Override
     public Image update(ImageDto imageDto) {
+        if (imageDto.getName() == null){
+            imageDto.setName(LocalDateTime.now().toString());
+        }
+        if (imageDto.getFolder() == null)
+            imageDto.setFolder(FolderConstants.DEFAULT_FOLDER);
         Image old = imageRepository.findById(imageDto.getId()).orElseThrow(() -> ApiException.builder().httpStatus(HttpStatus.INTERNAL_SERVER_ERROR).message("Invalid image"));
-        minioService.upload(FolderConstants.AVATAR_FOLDER, imageDto.getName(), new ByteArrayInputStream(imageDto.getBytes()));
-        imageDto.setUrl(FolderConstants.AVATAR_FOLDER + imageDto.getName());
-        mapValue(old,ImageDto.toEntity(imageDto));
+        minioService.delete(old.getUrl());
+        minioService.upload(imageDto.getFolder(), imageDto.getName(), new ByteArrayInputStream(imageDto.getBytes()));
+        imageDto.setUrl(imageDto.getFolder() + imageDto.getName());
+        mapValue(old, ImageDto.toEntity(imageDto));
         return imageRepository.save(old);
     }
 
-    private void mapValue(Image oldImage, Image newImage){
+    private void mapValue(Image oldImage, Image newImage) {
         if (newImage.getName() != null)
             oldImage.setName(newImage.getName());
         if (newImage.getType() != null)
