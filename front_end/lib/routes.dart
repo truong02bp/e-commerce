@@ -1,6 +1,8 @@
 
 import 'package:ecommerce/screens/account/account_screen.dart';
+import 'package:ecommerce/screens/admin/categories/category_screen.dart';
 import 'package:ecommerce/screens/admin/manager/manager_screen.dart';
+import 'package:ecommerce/screens/admin/products/product_screen.dart';
 import 'package:ecommerce/screens/cart/cart_screen.dart';
 import 'package:ecommerce/screens/change_password/change_password_screen.dart';
 import 'package:ecommerce/screens/complete_profile/complete_profile.dart';
@@ -30,5 +32,6 @@ final Map<String,WidgetBuilder> routes = {
   ChangePasswordScreen.routeName : (context) => ChangePasswordScreen(),
   CartScreen.routeName : (context) => CartScreen(),
   ManagerScreen.routeName : (context) => ManagerScreen(),
-
+  ProductScreen.routeName : (context) => ProductScreen(),
+  CategoryScreen.routeName : (context) => CategoryScreen(),
 };
