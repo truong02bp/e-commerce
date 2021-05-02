@@ -15,7 +15,7 @@ public class Category extends BaseEntity {
     @Column(name = "code")
     private String code;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "image_id")
     private Image image;
 

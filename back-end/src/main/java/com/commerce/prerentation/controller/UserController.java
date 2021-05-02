@@ -42,7 +42,7 @@ public class UserController {
     @PutMapping("/user/update-avatar/{id}")
     public ResponseEntity<UserDto> updateAvatar(@PathVariable Long id,
                                           @RequestBody ImageDto imageDto){
-        UserDto res = userService.changeAvatar(id,imageDto.getBytes(),imageDto.getType());
+        UserDto res = userService.changeAvatar(id,imageDto);
         return ResponseEntity.ok(res);
     }
 

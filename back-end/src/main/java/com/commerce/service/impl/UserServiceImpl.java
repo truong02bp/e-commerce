@@ -3,12 +3,14 @@ package com.commerce.service.impl;
 import com.commerce.common.constants.FolderConstants;
 import com.commerce.common.constants.MessageConstants;
 import com.commerce.common.exception.ApiException;
+import com.commerce.data.dto.ImageDto;
 import com.commerce.data.dto.MyUserDetails;
 import com.commerce.data.dto.UserDto;
 import com.commerce.data.entities.Image;
 import com.commerce.data.entities.User;
 import com.commerce.data.repository.ImageRepository;
 import com.commerce.data.repository.UserRepository;
+import com.commerce.service.ImageService;
 import com.commerce.service.MinioService;
 import com.commerce.service.UserService;
 import lombok.AllArgsConstructor;
@@ -35,9 +37,7 @@ public class UserServiceImpl implements UserService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    private final MinioService minioService;
-
-    private final ImageRepository imageRepository;
+    private final ImageService imageService;
 
     @Override
     @Transactional
@@ -55,16 +55,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDto changeAvatar(Long id, byte[] data, String type) {
+    public UserDto changeAvatar(Long id, ImageDto imageDto) {
         User user = userRepository.findById(id).orElseThrow(() -> ApiException.builder().httpStatus(HttpStatus.INTERNAL_SERVER_ERROR).message("Invalid user"));
-        String fileName = "user_" + user.getId() + "_" + LocalDateTime.now() + "." + type;
-        minioService.upload(FolderConstants.AVATAR_FOLDER, fileName, new ByteArrayInputStream(data));
-        if (user.getImage() == null) {
-            Image image = new Image();
-            image = imageRepository.save(image);
-            user.setImage(image);
+        String fileName = "user_" + user.getId() + "_" + LocalDateTime.now() + "." + imageDto.getType();
+        imageDto.setName(fileName);
+        if (user.getImage() != null){
+            user.setImage(imageService.save(imageDto));
         }
-        user.getImage().setUrl(FolderConstants.AVATAR_FOLDER + fileName);
+        else
+            user.setImage(imageService.update(imageDto));
         return UserDto.toDto(userRepository.save(user));
     }
 

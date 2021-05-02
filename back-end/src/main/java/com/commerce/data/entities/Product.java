@@ -3,6 +3,7 @@ package com.commerce.data.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -14,6 +15,9 @@ public class Product extends BaseEntity {
 
     @Column(name = "price")
     private Long price;
+
+    @OneToMany
+    private List<Image> images;
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
