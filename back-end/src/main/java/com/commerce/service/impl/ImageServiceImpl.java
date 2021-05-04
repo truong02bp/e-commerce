@@ -10,12 +10,14 @@ import com.commerce.service.MinioService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayInputStream;
 import java.time.LocalDateTime;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class ImageServiceImpl implements ImageService {
 
     private final ImageRepository imageRepository;
@@ -29,8 +31,8 @@ public class ImageServiceImpl implements ImageService {
         }
         if (imageDto.getFolder() == null)
             imageDto.setFolder(FolderConstants.DEFAULT_FOLDER);
-        minioService.upload(imageDto.getFolder(), imageDto.getName(), new ByteArrayInputStream(imageDto.getBytes()));
-        imageDto.setUrl(imageDto.getFolder() + imageDto.getName());
+        minioService.upload(imageDto.getFolder(), imageDto.getName() + "." + imageDto.getType(), new ByteArrayInputStream(imageDto.getBytes()));
+        imageDto.setUrl(imageDto.getFolder() + imageDto.getName() + "." + imageDto.getType());
         return imageRepository.save(ImageDto.toEntity(imageDto));
     }
 

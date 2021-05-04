@@ -26,6 +26,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class UserServiceImpl implements UserService {
 
 
@@ -36,7 +37,6 @@ public class UserServiceImpl implements UserService {
     private final ImageService imageService;
 
     @Override
-    @Transactional
     public UserDto save(UserDto userDto) {
         User user;
         if (userDto.getId() == null) {
@@ -50,10 +50,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public UserDto changeAvatar(Long id, ImageDto imageDto) {
         User user = userRepository.findById(id).orElseThrow(() -> ApiException.builder().httpStatus(HttpStatus.INTERNAL_SERVER_ERROR).message("Invalid user"));
-        String fileName = "user_" + user.getId() + "_" + LocalDateTime.now() + "." + imageDto.getType();
+        String fileName = "user_" + user.getId() + "_" + LocalDateTime.now();
         imageDto.setName(fileName);
         imageDto.setFolder(FolderConstants.AVATAR_FOLDER);
         if (user.getImage() == null){
@@ -65,7 +64,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public UserDto changePassword(UserDto userDto) {
         User user = userRepository.findById(userDto.getId()).orElseThrow(() -> ApiException.builder().httpStatus(HttpStatus.INTERNAL_SERVER_ERROR).message("Invalid user"));
         String oldPassword = userDto.getPassword();
@@ -82,7 +80,6 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
         if (user == null)

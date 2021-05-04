@@ -13,6 +13,7 @@ import java.util.Random;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class RegisterServiceImpl implements RegisterService {
 
     private final JavaMailSender javaMailSender;
@@ -21,7 +22,6 @@ public class RegisterServiceImpl implements RegisterService {
 
 
     @Override
-    @Transactional
     public String sendOtp(String email, String name) {
         SimpleMailMessage message = new SimpleMailMessage();
         Random random = new Random();

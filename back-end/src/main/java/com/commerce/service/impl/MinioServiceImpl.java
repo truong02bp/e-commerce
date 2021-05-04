@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,6 +25,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @Service
+@Transactional
 public class MinioServiceImpl implements MinioService {
 
     @Autowired
@@ -57,7 +59,7 @@ public class MinioServiceImpl implements MinioService {
                         .object(folder + name).filename(tempFile.toString());
                 minioClient.uploadObject(builder.build());
             } catch (IOException | ErrorResponseException | InsufficientDataException | InternalException | InvalidKeyException | InvalidResponseException | NoSuchAlgorithmException | ServerException | XmlParserException e) {
-                e.printStackTrace();
+                throw ApiException.builder().httpStatus(HttpStatus.INTERNAL_SERVER_ERROR).message("Minio error");
             }
         }
 
