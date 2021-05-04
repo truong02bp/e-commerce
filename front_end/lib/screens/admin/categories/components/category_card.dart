@@ -1,7 +1,13 @@
+import 'package:ecommerce/model/category.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
 
-class ProductCard extends StatelessWidget {
+class CategoryCard extends StatelessWidget {
+
+  final Category category;
+
+  CategoryCard({this.category});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -10,8 +16,7 @@ class ProductCard extends StatelessWidget {
         height: getProportionateHeight(100),
         width: double.infinity,
         decoration: BoxDecoration(
-            color: Colors.grey.withOpacity(0.4),
-            borderRadius: BorderRadius.circular(20)),
+            color: Colors.white, borderRadius: BorderRadius.circular(20)),
         child: Row(
           children: [
             SizedBox(
@@ -35,9 +40,8 @@ class ProductCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Name : Bánh mì thập cẩm'),
-                Text('Category : banh mi'),
-                Text('Price : 30000')
+                Text('Name : ${category.name}'),
+                Text('Code : ${category.code}'),
               ],
             ))
           ],

@@ -1,3 +1,4 @@
+import 'package:ecommerce/screens/admin/categories/category_screen.dart';
 import 'package:ecommerce/screens/admin/products/product_screen.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class Body extends StatelessWidget {
               Expanded(
                   child: GestureDetector(
                     onTap: (){
-                      Navigator.of(context).popAndPushNamed(ProductScreen.routeName);
+                      Navigator.of(context).pushNamed(ProductScreen.routeName);
                     },
                 child: buildContainer(
                     image: "assets/images/list.png", text: 'List products'),
@@ -30,11 +31,16 @@ class Body extends StatelessWidget {
                 width: 20,
               ),
               Expanded(
-                  child: buildContainer(
-                      image: "assets/images/list2.png",
-                      text: 'List categories',
-                      color: Colors.red,
-                      colorImage: Colors.white.withOpacity(0.8))),
+                  child: GestureDetector(
+                    onTap: (){
+                      Navigator.pushNamed(context, CategoryScreen.routeName);
+                    },
+                                      child: buildContainer(
+                        image: "assets/images/list2.png",
+                        text: 'List categories',
+                        color: Colors.red,
+                        colorImage: Colors.white.withOpacity(0.8)),
+                  )),
               SizedBox(
                 width: 10,
               )

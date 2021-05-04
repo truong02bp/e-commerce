@@ -7,6 +7,7 @@ import 'package:ecommerce/model/user.dart';
 import 'package:ecommerce/service/api_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+
 class UserService {
 
   ApiService apiService = ApiService();

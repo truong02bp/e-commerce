@@ -3,10 +3,19 @@ import 'package:ecommerce/model/api_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 class ApiService {
+
+  static ApiService apiService;
+
+  static ApiService getInstance(){
+    if (apiService == null)
+      apiService = ApiService();
+    return apiService;  
+  }
   
   Future<dynamic> load<T>(ApiModel<T> resource) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String token = preferences.getString("token");
+    if (resource.headers == null)
     if (token != null)
       resource.headers['Authorization'] = token;
     try {
