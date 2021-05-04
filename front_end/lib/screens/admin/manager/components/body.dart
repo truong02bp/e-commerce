@@ -25,7 +25,7 @@ class Body extends StatelessWidget {
                       Navigator.of(context).pushNamed(ProductScreen.routeName);
                     },
                 child: buildContainer(
-                    image: "assets/images/list.png", text: 'List products'),
+                    image: "assets/images/list.png", text: 'Products'),
               )),
               SizedBox(
                 width: 20,
@@ -37,7 +37,7 @@ class Body extends StatelessWidget {
                     },
                                       child: buildContainer(
                         image: "assets/images/list2.png",
-                        text: 'List categories',
+                        text: 'Categories',
                         color: Colors.red,
                         colorImage: Colors.white.withOpacity(0.8)),
                   )),
@@ -75,7 +75,7 @@ class Body extends StatelessWidget {
           ),
           Text(
             text,
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: Colors.black, fontSize: 18),
           )
         ],
       ),

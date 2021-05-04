@@ -1,8 +1,9 @@
 import 'package:ecommerce/blocs/category_bloc.dart';
-import 'package:ecommerce/constants/constants.dart';
+import 'package:ecommerce/components/title_item.dart';
 import 'package:ecommerce/events/category_event.dart';
 import 'package:ecommerce/model/category.dart';
-import 'package:ecommerce/screens/admin/categories/components/category_card.dart';
+import 'package:ecommerce/screens/admin/categories/components/list_category.dart';
+import 'package:ecommerce/size_config.dart';
 import 'package:ecommerce/state/category_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,6 +25,8 @@ class _BodyState extends State<Body> {
   int currentPage = 0;
 
   bool isLoading = false;
+
+  bool isAdd = false;
 
   @override
   void initState() {
@@ -65,16 +68,45 @@ class _BodyState extends State<Body> {
           });
         }
       },
-      child: ListView(controller: _controller, children: [
-        Column(
-          children: List.generate(
-              categories.length,
-              (index) => CategoryCard(
-                    category: categories[index],
-                  )).toList(),
-        ),
-        buildLoading(isLoading: isLoading, color: Colors.white.withOpacity(0.95))
-      ]),
+      child: Column(
+        children: [
+          Container(
+            height: SizeConfig.screenHeight / 16,
+            child: Row(
+              children: [
+                TitleItem(
+                  title: 'List category',
+                  width: SizeConfig.screenWidth / 2,
+                  isPicked: !isAdd,
+                  onPress: () {
+                    setState(() {
+                      isAdd = false;
+                    });
+                  },
+                ),
+                TitleItem(
+                  title: 'Add new category',
+                  width: SizeConfig.screenWidth / 2,
+                  isPicked: isAdd,
+                  onPress: () {
+                    setState(() {
+                      isAdd = true;
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),
+          (isAdd == false)
+              ? Expanded(
+                  child: ListCategory(
+                      controller: _controller,
+                      categories: categories,
+                      isLoading: isLoading),
+                )
+              : Expanded(child: Container()),
+        ],
+      ),
     );
   }
 }

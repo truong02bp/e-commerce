@@ -1,4 +1,4 @@
-import 'package:ecommerce/screens/cart/components/title_item.dart';
+import 'package:ecommerce/components/title_item.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
 
@@ -21,21 +21,21 @@ class _BodyState extends State<Body> {
         ),
         Row(
           children: [
-            TitleItem(isPicked: isAllPicked, title: 'All', onPress: (){
+            TitleItem(isPicked: isAllPicked, title: 'All', width: SizeConfig.screenWidth / 3, onPress: (){
               setState(() {
                 isAllPicked = true;
                 isSalePicked = false;
                 isBuyAgainPicked = false;
               });
             },),
-            TitleItem(isPicked: isSalePicked, title: 'Sale', onPress: (){
+            TitleItem(isPicked: isSalePicked, title: 'Sale', width: SizeConfig.screenWidth / 3, onPress: (){
               setState(() {
                 isAllPicked = false;
                 isSalePicked = true;
                 isBuyAgainPicked = false;
               });
             },),
-            TitleItem(isPicked: isBuyAgainPicked, title: 'Buy again', onPress: (){
+            TitleItem(isPicked: isBuyAgainPicked, title: 'Buy again', width: SizeConfig.screenWidth / 3, onPress: (){
               setState(() {
                 isAllPicked = false;
                 isSalePicked = false;
